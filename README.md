@@ -71,35 +71,46 @@ Put the bash scripts in the folder where your fastq files are. Your folder shoul
 
 # Amplicon Processing using the bash scripts *FASP_preprocess.sh, FASP_unoise.sh, FASP_uparse.sh -setting parameters*
 Now that all files are in place, we have to configure the files that have to be configured. In this tutorial, we assume that you have a huge number of data, several hundred .fastq files. Also, we assume that we want to denoise raw reads("FASP_unoise.sh") instead of clustering OTUs ("FASP_uparse.sh"). For this reason this tutorial will take 
-Thus we open the "FASP_precrocess_vsearch.sh" script using a text editor (just right click and choose "open with text editor" / if you are using the terminal only you can open by typing:"nano FASP_preprocessing.sh").
+
+**FASP_Preprocessing.sh** is a bash script for the preprocessing of raw fastq files based on the programs USEARCH v10.240 and VSEARCH v2.80. Run the script by typing:
+
+```
+bash FASP_preprocess_vsearch.sh
+```
+After a while, the script will ask you if you have defined the length of the primers and the expected sequence length.
+Thus we open the **"FASP_precrocess_vsearch.sh"** script using a text editor (just right click and choose "open with text editor" / if you are using the terminal only you can open by typing:"nano FASP_preprocessing.sh").
 Now you have to look at the positions that are marked whether with "XX" substitute them with the length of your primers. "XXX" have to be replaced with the minimum and maximum expected length of your sequences. See the screenshot for a better understanding:
 
+**IMPORTANT!!!!!!! Positions marked with XX need to be adjusted according to the users need!!!!!!!**
+<p>
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/preprocess_selection.png" width="1000" height="80" />
+</p>
 
-IMPORTANT!!!!!!! Positions marked with XX need to be adjusted according to the users need!!!!!!!
-1. FASP_Preprocessing.sh
-*FASP_Preprocessing.sh* is a bash script for the preprocessing of raw fastq files based on the programs USEARCH v10.240 and VSEARCH v2.80.
-What the script does: 
+After this is done, save your script and simply run the script as described above.
 
+What happens by running **FASP_preprocess.sh** or **FASP_preprocess_vsearch.sh**?
 
+a. Forward and reverse paired-end reads are merged and then all merged reads are put into one single .fastq file. The output file is named **raw.fq** -> more information http://drive5.com/usearch/manual/merge_pair.html. Further, an info file on the single merged file is created, named **raw_info.txt**
 
-ää
-a. Merging forward and reverse paired-end reads into one single .fastq file -> more information http://drive5.com/usearch/manual/merge_pair.html. Further, an info file on the single merged file is created, named raw_info.txt
-b. Estimating the error rates bases based on of maybe screenshot?
-![GitHub Logo](/logo.png)
-Expected errors:
-http://drive5.com/usearch/manual/exp_errs.html -> Output file is: *qualrawfq.txt*
-c. Trimming of primers, overhangs and quality filtering of the reads based on estimated error rates.
-d. Generation of a fasta file containing only unique sequences
+b. Expected Error rates (EE values) are created which indicates the probability if a particular base is right or wrong. The output file is named **qualrawfq.txt**. If you open the script in a text editor, you can change the calue to whether 0.5 (more stringent) or 2.0 (less stringent). For more information  on http://drive5.com/usearch/manual/exp_errs.html 
 
-     Unoise3                                            |       Uparse
---------------------------------------------------------| --------------------------------
-Distinguish correct biological sequence from noisy read | Cluster similar reads into OTUs
-no treshold, denoised raw reads                         | 97% similarity treshold
+c. Trimming of primers, overhangs and quality filtering of the reads based on estimated error rates. The output file if we execute **FASP_preprocess_vsearch** is **vsearchfilteredstripped.fa**, while for **FASP_preprocess.sh** there are several output files: **strippedraw.fq** following trimming, and **filteredstripped.fa** following the subsequent quality filtering.  
 
-2.	FASP_unoise.sh
-With FASPA, you can choose if you whether want to denoise your reads or cluster OTUs. Resently, the discussion shows a tendency to 
-a. Using the uniques.fa file as an input, the unoise3 algorithm will create denoised raw reads, so called zero radius OTUs (ZOTUs). To streamline downstream analyses, the ZOTUs are renamed into OTUs. Further, a raw OTU table is created that is quality checked and further processed using the UNCROSS algorithm to get rid off wrongly assigned OTUs through cross-talk  More *information see: http://drive5.com/usearch/manual/crosstalk.html*
-Taxonomic assignment of the OTUs is done using the SINTAX algorithm (paper) and the rdp_16s_v16.fa database. The SINTAX algorithm uses k-mer similarity (https://en.wikipedia.org/wiki/K-mer) to identify the highest taxonomic ranks and provides an output table with bootstrap confidence values for all predicted taxonomic ranks.
+d. Generation of a fasta file containing only unique sequences, the output file is **uniques.fa**
+
+**FASP_unoise.sh** or **FASP_uparse.sh**
+In FASPA, you can choose whether you want to denoise your filtered and trimmed raw reads or if you want to cluster OTUs at97% similarity level. 
+    Unoise3                                            |       Uparse
+-------------------------------------------------------| --------------------------------
+Distinguish correct biological sequence from noisy read| Cluster similar reads into OTUs
+no treshold, denoised raw reads                        | 97% similarity treshold
+
+a. Using the uniques.fa file as an input, the unoise3 algorithm will create denoised raw reads, so called Zero-radius OTUs (ZOTUs). Further, a raw OTU table is created that is quality checked and 
+
+b. The raw OTU table is further processed using the USEARCH's UNCROSS algorithm to get rid off wrongly assigned OTUs through cross-talk  More *information see: http://drive5.com/usearch/manual/crosstalk.html*
+c. Taxonomic assignment of the OTUs is done using the SINTAX algorithm (paper) implemented in USEARCH and the rdp_16s_v16.fa database. The SINTAX algorithm uses k-mer similarity (https://en.wikipedia.org/wiki/K-mer) to identify the highest taxonomic ranks and provides an output table with bootstrap confidence values for all predicted taxonomic ranks.
+
+ 
 
 Further, a phylogenetic tree in Newick-format (https://en.wikipedia.org/wiki/Newick_format is constructed via creation of a distance matrix and agglomerative clustering.
 Output files of FASP_unoise.sh: -> zotus.fa
@@ -110,13 +121,11 @@ Using the uniques.fa file as an input, the uparse algorithm will create operatio
 Output files of FASP_uparse.sh: -> zotus.fa
 or OTU clustering (using UPARSE), both part of Usearch v.10.240
 
-# Statistical analysis 
-For a first statistical overview, I recommend the R-script collection Rhea (Lagkouvardos et al. 2016). Rhea can be downloaded from this link (LINK). Here, a quick tutorial is provided how you can implement your FASPA generated files into Rhea.
+# Statistical analysis using R-studio and Rhea
+Files which were generated by the workflow can be further analyzed using R, the most commonly used statistical language. While it is possible 
+For a first statistical overview, I recommend the R-script collection Rhea (Lagkouvardos et al. 2016). Rhea can be downloaded from this link (LINK). Here, a quick tutorial is provided how you can implement your FASP generated files into Rhea.
 
 
 Transparency: FASPA is a completely transparent workflow, advantegous for the user, also gives respect to the used programs.
 4.	SINTAX algorithm for the taxonomic assignment and classification of OTUs or ASVs.
 5.	Custom perl and R scripts that allow downstream analysis of the generated dataset i downstream analysis to utilize the statistical features of the popular tools QIIMEX the  R-based package phyloseqX and the Rhea-pipeline (L) which allows 
-
-
-# 
