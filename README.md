@@ -1,4 +1,5 @@
 
+
 # FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
 
 If you have any questions, please write me at pfeiffer.stefan@gmx.at
@@ -21,6 +22,8 @@ In a nutshell, FASPA manages precarious balance by being very fast, applies stat
 # *FASP_preprocess.sh, FASP_unoise.sh, FASP_uparse.sh*
 Put the bash scripts in the folder where your fastq files are. Open the script in a text editor. IMPORTANT!!!!!!! Positions marked with XX need to be adjusted according to the users need!!!!!!!
 1. FASP_Preprocessing.sh
+![code] (https://github.com/StefanPfeiffer80/FASPA.github.io/screenshot/preprocess_vsearch.png "Code")
+
 Bash script for the preprocessing of raw fastq files based on the programs USEARCH v10.240 and VSEARCH v2.80 !links - check markdown!!!.
 What the script does: 
 a. Merging forward and reverse paired-end reads into one single .fastq file -> more information http://drive5.com/usearch/manual/merge_pair.html. Further, an info file on the single merged file is created, named raw_info.txt
