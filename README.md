@@ -1,4 +1,3 @@
-
 # FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
 
 If you have any questions, please write me at pfeiffer.stefan@gmx.at
@@ -30,28 +29,6 @@ Expected errors:
 http://drive5.com/usearch/manual/exp_errs.html -> Output file is: *qualrawfq.txt*
 c. Trimming of primers, overhangs and quality filtering of the reads based on estimated error rates.
 d. Generation of a fasta file containing only unique sequences
-
-     Unoise3                                            |       Uparse
---------------------------------------------------------| --------------------------------
-Distinguish correct biological sequence from noisy read | Cluster similar reads into OTUs
-no treshold, denoised raw reads                         | 97% similarity treshold
-
-2.	FASP_unoise.sh
-With FASPA, you can choose if you whether want to denoise your reads or cluster OTUs. Resently, the discussion shows a tendency to 
-a. Using the uniques.fa file as an input, the unoise3 algorithm will create denoised raw reads, so called zero radius OTUs (ZOTUs). To streamline downstream analyses, the ZOTUs are renamed into OTUs. Further, a raw OTU table is created that is quality checked and further processed using the UNCROSS algorithm to get rid off wrongly assigned OTUs through cross-talk  More *information see: http://drive5.com/usearch/manual/crosstalk.html*
-Taxonomic assignment of the OTUs is done using the SINTAX algorithm (paper) and the rdp_16s_v16.fa database. The SINTAX algorithm uses k-mer similarity (https://en.wikipedia.org/wiki/K-mer) to identify the highest taxonomic ranks and provides an output table with bootstrap confidence values for all predicted taxonomic ranks.
-
-Further, a phylogenetic tree in Newick-format (https://en.wikipedia.org/wiki/Newick_format is constructed via creation of a distance matrix and agglomerative clustering.
-Output files of FASP_unoise.sh: -> zotus.fa
-
-3.	FASP_uparse.sh
-Using the uniques.fa file as an input, the uparse algorithm will create operational taxonomic units (OTUs) at a 97% sequence similarity treshold. 97% 16S rRNA sequence similarity was for a long time treated as a marker for the establishment of species. However, it should be considered that this will not be the case for many bacterial species, including most enterobacteriaceae., . Using OTUs defined by clustering from unique sequences, FASPA creates a OTU table, likewise corrected by applying the UNCROSS algorithm, as it was done in FASP_unoise.sh.
-
-Output files of FASP_uparse.sh: -> zotus.fa
-or OTU clustering (using UPARSE), both part of Usearch v.10.240
-
-# Statistical analysis 
-For a first statistical overview, I recommend the R-script collection Rhea (Lagkouvardos et al. 2016). Rhea can be downloaded from this link (LINK). Here, a quick tutorial is provided how you can implement your FASPA generated files into Rhea.
 
 
 Transparency: FASPA is a completely transparent workflow, advantegous for the user, also gives respect to the used programs.
