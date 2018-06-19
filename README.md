@@ -22,8 +22,10 @@ In a nutshell, FASPA manages precarious balance by being very fast, applies stat
 # *FASP_preprocess.sh, FASP_unoise.sh, FASP_uparse.sh*
 Put the bash scripts in the folder where your fastq files are. Open the script in a text editor. IMPORTANT!!!!!!! Positions marked with XX need to be adjusted according to the users need!!!!!!!
 1. FASP_Preprocessing.sh
+<p>
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/preprocess_vsearch.png" width="620" height="240" />
+</p>
 
-![screenshots] (https://github.com/StefanPfeiffer80/FASPA.github.io/preprocess_vsearch.png)
 
 Bash script for the preprocessing of raw fastq files based on the programs USEARCH v10.240 and VSEARCH v2.80 !links - check markdown!!!.
 What the script does: 
