@@ -17,18 +17,64 @@ FASPA also supports the integration of the processed amplicon data in various po
 These pipelines claim that their usage addresses the need to be easy-to-use through the application of default or streamlined parameters. 
 In a nutshell, FASPA manages precarious balance by being very fast, applies state of the art bioinformatic tools, having low CPU requirements, offers full transparency for the user by being at the same time easy to use. 
 
-# Main structure
-# Executable UNIX shell bash scripts
-# *FASP_preprocess.sh, FASP_unoise.sh, FASP_uparse.sh*
+# Software needed
+For the first part of the FASPA workflow, the amplicon processing, FASPA uses the programs USEARCH v.10.240 and optionally VSEARCH v.2.80. 
+Usearch by Robert Edgar (Edgar 2010) is a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. Usearch can be downloaded as a single executable file (www.drive5.com/usearch/download.html). Usearch includes the uparse algorithm (Edgar 2013) to cluster OTUs, which showed improved accuracy in OTU assignment towards many other commonly used clustering algorithms and was already cited several thousand times. For details how UPARSE works, see here (LINK). Recently, Usearch implemented unoise (unoise paper), an algorithm for denoising of raw sequences, which actually means that the genetic variation of sequences is analyzed to find out what causes the sequence variation: Real sequence differences or sequencing errors. Nowadays, denoising of raw amplicon reads becomes more popular and is recommended by several experts in the field (citations). Usearch however, is free of charge only in the 32 bit version, which holds a 4GB memory cap. While this is not a problem for most datasets (depending on the sample type between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be working out. For this reason, FASPA includes Vsearch by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to usearch. Vsearch can be downloaded here https://github.com/torognes/vsearch. For the FASPA workflow, it is evident that you don't use any vsearch version prior to v2.8.0.
+
+Usearch installation:
+1. Go to the usearch download homepage of the 32-bit version (www.drive5.com/usearch/download.html).
+2. Select the version "USEARCH v.10.0.240", select "Linux", register your email adress.
+3. USEARCH will be sent to you by mail as an executable file.
+3. Copy the usearch file into the order where you want to perform your analysis.
+4. Rename the usearch file to "US_10_240" by typing "mv usearch10.0.240_i86osx32 US_10_240".
+5. Run the command ""chmod +x US_10_240" and type in your password to make the file executable
+
+Vsearch installation:
+For details, go to the vsearch homepage (https://github.com/torognes/vsearch).
+
+```wget https://github.com/torognes/vsearch/archive/v2.8.0.tar.gz
+tar xzf v2.8.0.tar.gz
+cd vsearch-2.8.0
+./autogen.sh
+./configure
+make
+make install  # as root or sudo make install
+wget https://github.com/torognes/vsearch/archive/v2.8.0.tar.gz
+tar xzf v2.8.0.tar.gz
+cd vsearch-2.8.0
+./autogen.sh
+./configure
+make
+make install  # as root or sudo make install
+```
+# FASPA script collection
+First, go into the folder where you want to perform your analysis. Then, download the FASPA1 scripts to Linux by writing
+```
+wget https://github.com/StefanPfeiffer80/FASPA.github.io/
+tar xzf v2.8.0.tar.gz
+```
+
+# Amplicon Processing using the bash scripts *FASP_preprocess.sh, FASP_unoise.sh, FASP_uparse.sh*
+When all needed programs are installed and they are also at their place, amplicon processing with FASPA is pretty easy.
+1. Go to your folder where you want to perform your analysis.
+2. List your files by typing "ls" or "ll". Your folder should contain the following :
+```
+FASP_preprocess.sh
+FASP_preprocess_vsearch.sh
+FASP_unoise.sh
+the usearch executable "US_10_240"
+```
 Put the bash scripts in the folder where your fastq files are. Open the script in a text editor. IMPORTANT!!!!!!! Positions marked with XX need to be adjusted according to the users need!!!!!!!
 1. FASP_Preprocessing.sh
+
+*FASP_Preprocessing.sh* is a bash script for the preprocessing of raw fastq files based on the programs USEARCH v10.240 and VSEARCH v2.80.
+What the script does: 
 <p>
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/preprocess_vsearch.png" width="620" height="240" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/preprocess_selection.png" width="620" height="240" />
 </p>
 
 
-Bash script for the preprocessing of raw fastq files based on the programs USEARCH v10.240 and VSEARCH v2.80 !links - check markdown!!!.
-What the script does: 
+ää
 a. Merging forward and reverse paired-end reads into one single .fastq file -> more information http://drive5.com/usearch/manual/merge_pair.html. Further, an info file on the single merged file is created, named raw_info.txt
 b. Estimating the error rates bases based on of maybe screenshot?
 ![GitHub Logo](/logo.png)
