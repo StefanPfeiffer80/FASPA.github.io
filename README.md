@@ -6,7 +6,7 @@ If you have any questions, please write me at pfeiffer.stefan@gmx.at
 FASP is a workflow for analysing Illumina paired-end sequence data. 
 This file is distributed without warranty
 This file runs as a Linux bashscript; 
-Cite as: Pfeiffer, S. (2018) Prootocl Exchange. FASPA - Fast Amplicon Sequence Processing and Analyses
+Cite as: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses
 
 # Introduction
 High-throughput sequencing of the 16S rRNA marker gene is the current benchmark in the characterization of bacterial microbial communities from virtually all environments.
@@ -21,7 +21,7 @@ In a nutshell, FASPA manages precarious balance by being very fast, applies stat
 For the first part of the FASPA workflow, the amplicon processing, FASPA uses the programs USEARCH v.10.240 and optionally VSEARCH v.2.80. 
 Usearch by Robert Edgar (Edgar 2010) is a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. Usearch can be downloaded as a single executable file (www.drive5.com/usearch/download.html). Usearch includes the uparse algorithm (Edgar 2013) to cluster OTUs, which showed improved accuracy in OTU assignment towards many other commonly used clustering algorithms and was already cited several thousand times. For details how UPARSE works, see here (LINK). Recently, Usearch implemented unoise (unoise paper), an algorithm for denoising of raw sequences, which actually means that the genetic variation of sequences is analyzed to find out what causes the sequence variation: Real sequence differences or sequencing errors. Nowadays, denoising of raw amplicon reads becomes more popular and is recommended by several experts in the field (citations). Usearch however, is free of charge only in the 32 bit version, which holds a 4GB memory cap. While this is not a problem for most datasets (depending on the sample type between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be working out. For this reason, FASPA includes Vsearch by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to usearch. Vsearch can be downloaded here https://github.com/torognes/vsearch. For the FASPA workflow, it is evident that you don't use any vsearch version prior to v2.8.0.
 
-Usearch installation:
+**Usearch installation**
 1. Go to the usearch download homepage of the 32-bit version (www.drive5.com/usearch/download.html).
 2. Select the version "USEARCH v.10.0.240", select "Linux", register your email adress.
 3. USEARCH will be sent to you by mail as an executable file.
@@ -29,7 +29,7 @@ Usearch installation:
 4. Rename the usearch file to "US_10_240" by typing "mv usearch10.0.240_i86osx32 US_10_240".
 5. Run the command ""chmod +x US_10_240" and type in your password to make the file executable
 
-Vsearch installation:
+**Vsearch installation**
 For details, go to the vsearch homepage (https://github.com/torognes/vsearch).
 
 ```wget https://github.com/torognes/vsearch/archive/v2.8.0.tar.gz
