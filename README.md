@@ -64,14 +64,22 @@ FASP_preprocess_vsearch.sh
 FASP_unoise.sh
 the usearch executable "US_10_240"
 ```
-Put the bash scripts in the folder where your fastq files are. Open the script in a text editor. IMPORTANT!!!!!!! Positions marked with XX need to be adjusted according to the users need!!!!!!!
-1. FASP_Preprocessing.sh
+Put the bash scripts in the folder where your fastq files are. Your folder should then look somehow like this (+ of course most likely a higher number of .fastq files).
+<p>
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_folder.png" width="620" height="100" />
+</p>
 
+# Amplicon Processing using the bash scripts *FASP_preprocess.sh, FASP_unoise.sh, FASP_uparse.sh -setting parameters*
+Now that all files are in place, we have to configure the files that have to be configured. In this tutorial, we assume that you have a huge number of data, several hundred .fastq files. Also, we assume that we want to denoise raw reads("FASP_unoise.sh") instead of clustering OTUs ("FASP_uparse.sh"). For this reason this tutorial will take 
+Thus we open the "FASP_precrocess_vsearch.sh" script using a text editor (just right click and choose "open with text editor" / if you are using the terminal only you can open by typing:"nano FASP_preprocessing.sh").
+Now you have to look at the positions that are marked whether with "XX" substitute them with the length of your primers. "XXX" have to be replaced with the minimum and maximum expected length of your sequences. See the screenshot for a better understanding:
+
+
+IMPORTANT!!!!!!! Positions marked with XX need to be adjusted according to the users need!!!!!!!
+1. FASP_Preprocessing.sh
 *FASP_Preprocessing.sh* is a bash script for the preprocessing of raw fastq files based on the programs USEARCH v10.240 and VSEARCH v2.80.
 What the script does: 
-<p>
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/preprocess_selection.png" width="620" height="240" />
-</p>
+
 
 
 ää
