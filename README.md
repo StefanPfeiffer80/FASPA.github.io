@@ -2,16 +2,16 @@
 
 # FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
 
-If you have any questions, please write me at pfeiffer.stefan@gmx.at
-FASP is a workflow for analysing Illumina paired-end sequence data. 
-This file is distributed without warranty
-This file runs as a Linux bashscript; 
-Cite as: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses
+If you have any questions, please write me at pfeiffer.stefan@gmx.at.  
+FASPA is a workflow for analysing Illumina paired-end sequence data. 
+FASPA is a collection of shell bash scripts, perl scripts and R scripts that interact with state of the art programs used in sequence processing, USEARCH and VSEARCH
+FASPA is distributed without warranty.  
+Cite as: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI:kommt noch  
 
 # Introduction
-High-throughput sequencing of the 16S rRNA marker gene is the current benchmark in the characterization of bacterial microbial communities from virtually all environments.
-Here, I present FASPA (Fast Amplicon Sequence Processing and Analysis), an amplicon processing workflow that is easy to use and allows in depth-analysis of microbial communities. 
-FASPA addresses the need for a transparent pipeline that based on executable bash scripts which allows very fast processing (less than 30 minutes on an average speed laptop with 4 GB RAM).
+High-throughput sequencing of the 16S rRNA marker gene is the current benchmark in the characterization of bacterial microbial communities from virtually all environments.  
+Here, I present FASPA -Fast Amplicon Sequence Processing and Analysis, an amplicon processing workflow that is easy to use and allows in depth-analysis of microbial communities. 
+FASPA addresses the need for a transparent pipeline that based on executable bash scripts, perl scripts and  which allows very fast processing (less than 30 minutes on an average speed laptop with 4 GB RAM).
 FASPA utilizes well-known and state of the art bioinformatics tools and provieds full transparency of the tools used and how they are applied.
 FASPA also supports the integration of the processed amplicon data in various popular analysis tools, such as QIIME or the R-based (cite) package collection phyloseq via scripts that 
 These pipelines claim that their usage addresses the need to be easy-to-use through the application of default or streamlined parameters. 
