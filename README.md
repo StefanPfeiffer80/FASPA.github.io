@@ -25,6 +25,7 @@ Today, denoising of raw amplicon reads becomes more popular especially in hindsi
 USEARCH however, is free of charge only in the 32 bit version, which holds a 4GB memory cap. While this is not a problem for most datasets (depending on the sample type between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be processed.  For this reason, FASPA includes VSEARCH by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to USEARCH (both USEARCH and VSEARCH are written in C++). For the FASPA workflow, it is evident that you don't use any VSEARCH version prior to v2.8.0.
 
 # Which publications have to be cited
+
 For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI:kommt noch  
 
 FASPA calls several functions of the USEARCH program, that have to be cited seperately.
@@ -48,6 +49,14 @@ If you choose to perform downstream analysis in R, cite:
 R-studio citation
 The Rhea script collection ->
 Phyloseq ->
+
+#Before we start
+# Download and extract the FASPA script collection
+First, go into the folder where you want to perform your analysis. Then, download the FASPA1 scripts to Linux by writing
+```
+wget https://github.com/StefanPfeiffer80/FASPA.github.io/
+tar xzf v2.8.0.tar.gz
+```
 
 **USEARCH installation**
 1. Go to the usearch download homepage of the 32-bit version (www.drive5.com/usearch/download.html).
@@ -82,13 +91,7 @@ wget https://www.drive5.com/usearch/manual/sintax_downloads/rdp_16s_v16.fa.gz
 tar xzf rdp_16s_v16.fa.gz
 ```
 
-# FASPA script collection
-First, go into the folder where you want to perform your analysis. Then, download the FASPA1 scripts to Linux by writing
-```
-wget https://github.com/StefanPfeiffer80/FASPA.github.io/
-tar xzf v2.8.0.tar.gz
-```
-
+# FASPA workflow
 # Amplicon Processing using the bash scripts *FASP_preprocess_v1.sh, FASP_preprocess_v2.sh, FASP_unoise.sh, FASP_uparse.sh*
 When all needed programs are installed and they are also at their place, amplicon processing with FASPA is pretty easy.
 1. Go to your folder where you want to perform your analysis.
