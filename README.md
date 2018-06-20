@@ -4,9 +4,9 @@
 
 If you have any questions, please write me at pfeiffer.stefan@gmx.at.  
 FASPA is a workflow for analysing Illumina paired-end sequence data. 
-FASPA is a collection of shell bash scripts, perl scripts and R scripts that interact with state of the art programs used in sequence processing, USEARCH and VSEARCH.  
+FASPA is a collection of shell bash scripts, perl scripts and R scripts that apply state of the art programs used in sequence processing, USEARCH and VSEARCH. FASPA output files are directly in downstream analysis of the data using the popular phyloseq package in R, the Rhea script collection, or the QIIME software package.   
 FASPA is distributed without warranty.  
-Cite as: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI:kommt noch  
+For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI:kommt noch  
 
 # Introduction
 High-throughput sequencing of the 16S rRNA marker gene is the current benchmark in the characterization of bacterial microbial communities from virtually all environments.  
