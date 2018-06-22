@@ -1,7 +1,7 @@
 
 # FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
 
-If you have any questions, critics or suggestions, please write me at pfeiffer.stefan@gmx.at.  
+If you have any questions, critics or suggestions, please write me at microbiawesome@gmail.com.
 FASPA is a workflow for analysing Illumina paired-end sequence data. 
 FASPA is a collection of shell bash scripts, perl scripts and R scripts and relies on state of the art programs used in sequence processing, USEARCH and VSEARCH. FASPA output files are directly in downstream analysis of the data using the phyloseq package in R, the Rhea script collection, or the QIIME software package.   
 FASPA is distributed without warranty.  
@@ -118,13 +118,13 @@ Now you have to look at the positions that are marked whether with "XX" substitu
 
 After this is done, save your script and simply run the script as described above.
 
-What happens by running **FASP_preprocess.sh** or **FASP_preprocess_vsearch.sh**?
+What happens by running **FASP_preprocess_v1.sh** or **FASP_preprocess_v2.sh**?
 
 a. Forward and reverse paired-end reads are merged and then all merged reads are put into one single .fastq file. The output file is named **raw.fq** -> more information http://drive5.com/usearch/manual/merge_pair.html. Further, an info file on the single merged file is created, named **raw_info.txt**
 
-b. Expected Error rates (EE values) are created which indicates the probability if a particular base is right or wrong. The output file is named **qualrawfq.txt**. If you open the script in a text editor, you can change the calue to whether 0.5 (more stringent) or 2.0 (less stringent). For more information  on http://drive5.com/usearch/manual/exp_errs.html 
+b. Expected Error rates (EE values) are created which indicates the probability if a particular base is right or wrong. The output file is named **qualrawfq.txt**. If you open the script in a text editor, you can change the treshold on EE values whether to 0.5 (more stringent) or 2.0 (less stringent). For more information  on http://drive5.com/usearch/manual/exp_errs.html 
 
-c. Trimming of primers, overhangs and quality filtering of the reads based on estimated error rates. The output file if we execute **FASP_preprocess_vsearch** is **vsearchfilteredstripped.fa**, while for **FASP_preprocess.sh** there are several output files: **strippedraw.fq** following trimming, and **filteredstripped.fa** following the subsequent quality filtering.  
+c. Trimming of primers, overhangs and quality filtering of the reads based on estimated error rates. The output file if we execute **FASP_preprocess_v1** is **vsearchfilteredstripped.fa**, while for **FASP_preprocess.sh** there are several output files: **strippedraw.fq** following trimming, and **filteredstripped.fa** following the subsequent quality filtering.  
 
 d. Generation of a fasta file containing only unique sequences, the output file is **uniques.fa**
 
