@@ -2,7 +2,7 @@
     <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_logo.png" width="800" height="150" />
 </p>
 [!Centered text]**FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data**
-.If you have any questions, critics or suggestions, please write me at microbiawesome@gmail.com.  
+- If you have any questions, critics or suggestions, please write me at microbiawesome@gmail.com.  
 - FASPA is a workflow for analysing Illumina paired-end sequence data.   
 - FASPA is a collection of shell bash scripts, perl scripts and R scripts and relies on state of the art programs used in sequence  
 - processing, USEARCH and VSEARCH. FASPA output files are directly in downstream analysis of the data using the phyloseq package in R, the Rhea script collection, or the QIIME software package.   
@@ -24,32 +24,33 @@ USEARCH by Robert Edgar (Edgar 2010) is a collection of functions and algorithms
 Today, denoising of raw amplicon reads becomes more popular especially in hindsight of the known biases that go together with OTU clustering using a 97% sequencing similarity cutoff to differentiate between species. For more information, look at the reviews XXXX  .
 USEARCH however, is free of charge only in the 32 bit version, which holds a 4GB memory cap. While this is not a problem for most datasets (depending on the sample type between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be processed.  For this reason, FASPA includes VSEARCH by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to USEARCH (both USEARCH and VSEARCH are written in C++). For the FASPA workflow, it is evident that you don't use any VSEARCH version prior to v2.8.0.
 
-# 2. Which publications have to be cited
+# 2. Which publications have to be cited when using FASPA?
 
-For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI:kommt noch  
+For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. (DOI:kommt noch)  
 
-FASPA calls several functions of the USEARCH program, that have to be cited seperately.
-In all cases, when you use FASPA, cite:
+FASPA is transparent on which third party software it relies on. QIIME (up to v.1.9.), LotuS, IMNGS among others rely on different versions of USEARCH and other programs. I think it is important for the user to exactly know the elements of which the pipeline consists, and it is fair for the developer of the third party software used to be credited accordingly. 
+
+Thus, in all cases when you use FASPA, cite:
+The USEARCH software
 - Edgar,RC (2010) Search and clustering orders of magnitude faster than BLAST, Bioinformatics 26(19), 2460-2461.
 doi: 10.1093/bioinformatics/btq461
 - Edgar, R.C. (2016), UNCROSS: Filtering of high-frequency cross-talk in 16S amplicon reads. doi: http://dx.doi.org/10.1101/088666
-UNOISE algorithm
 - Edgar, R.C. (2016), SINTAX, a simple non-Bayesian taxonomy classifier for 16S and ITS sequences, http://dx.doi.org/10.1101/074161.
 
-If you choose to preprocess your raw reads using FASP_preprocessing_v1.sh, cite:
-Rognes T, Flouri T, Nichols B, Quince C, Mahé F. (2016) VSEARCH: a versatile open source tool for metagenomics. PeerJ 4:e2584. doi: 10.7717/peerj.2584
+If you choose to preprocess your raw reads using FASP_preprocessing_v1.sh (the setup for large datasets using VSEARCH), cite:
+- Rognes T, Flouri T, Nichols B, Quince C, Mahé F. (2016) VSEARCH: a versatile open source tool for metagenomics. PeerJ 4:e2584. doi: 10.7717/peerj.2584
 
 If you choose to denoise your sequencesby calling FASP_unoise.sh, cite:
-Edgar, R.C. (2016), UNOISE2: Improved error-correction for Illumina 16S and ITS amplicon reads.http://dx.doi.org/10.1101/081257
+- Edgar, R.C. (2016), UNOISE2: Improved error-correction for Illumina 16S and ITS amplicon reads.http://dx.doi.org/10.1101/081257
 
 If you choose to cluster your sequences into OTUs by calling FASP_uparse.sh, cite:
-Edgar, R.C. (2013) UPARSE: Highly accurate OTU sequences from microbial amplicon reads, Nature Methods [Pubmed:23955772,  dx.doi.org/10.1038/nmeth.2604].
+- Edgar, R.C. (2013) UPARSE: Highly accurate OTU sequences from microbial amplicon reads, Nature Methods https://www.nature.com/articles/nmeth.2604
 
 If you choose to perform downstream analysis in R, cite:
-R-studio citation -> RStudio Team (2015). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL http://www.rstudio.com/.
+- R-studio citation -> RStudio Team (2015). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL http://www.rstudio.com/.
 The Rhea script collection ->
-Lagkouvardos I, Fischer S, Kumar N, Clavel T. (2017) Rhea: a transparent and modular R pipeline for microbial profiling based on 16S rRNA gene amplicons. PeerJ 5:e2836 https://doi.org/10.7717/peerj.2836
-Phyloseq -> McMurdie and Holmes (2013) phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLoS ONE. 8(4):e61217
+- Lagkouvardos I, Fischer S, Kumar N, Clavel T. (2017) Rhea: a transparent and modular R pipeline for microbial profiling based on 16S rRNA gene amplicons. PeerJ 5:e2836 https://doi.org/10.7717/peerj.2836
+- Phyloseq -> McMurdie and Holmes (2013) phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLoS ONE. 8(4):e61217
 
 # 3. Before we start
 **Download and extract the FASPA script collection**
