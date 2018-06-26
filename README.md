@@ -18,7 +18,7 @@ FASPA utilizes the well-known and state of the art bioinformatics tools USEARCH 
 FASPA also supports the integration of the processed amplicon data in various popular analysis tools, such as QIIME (Caporaso et al. 2010) or the R-based (R-core team, 2008) package collection phyloseq (McMurdie and Holmes, 2013). To gain an overview of the amplicon data (recommended), FASPA includes scripts that format the processed sequence data for direct application of the Rhea pipeline (Lagkouvardo et al. 2016) in R (R-core team, 2008).
 In a nutshell, FASPA manages precarious balance by being very fast, applies state of the art bioinformatic tools, having low CPU requirements, offers full transparency for the user by being at the same time easy to use. 
 
-**Software needed**
+**Software needed**  
 For the first part of the FASPA workflow, the amplicon processing, FASPA uses the programs USEARCH v.10.240 and optionally VSEARCH v.2.80. 
 USEARCH by Robert Edgar (Edgar 2010) is a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. Usearch can be downloaded as a single executable file (www.drive5.com/usearch/download.html). USEARCH includes the UPARSE algorithm (Edgar 2013) to cluster OTUs, which showed improved accuracy in OTU assignment towards other commonly used clustering algorithms and was already cited several thousand times. For detailson the clustering algorithm, see here: https://www.drive5.com/usearch/manual/uparseotu_algo.html. In version 9, USEARCH implemented UNOISE (Edgar and Flyvbjerg 2015, Edgar 2016), an algorithm for denoising of raw sequences, which actually means that the genetic variation of sequences is analyzed to find out what causes the sequence variation; whther real sequence differences or sequencing errors. For details see https://www.drive5.com/usearch/manual/unoise_algo.html.  
 Today, denoising of raw amplicon reads becomes more popular especially in hindsight of the known biases that go together with OTU clustering using a 97% sequencing similarity cutoff to differentiate between species. For more information, look at the reviews XXXX  .
@@ -30,27 +30,29 @@ For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon 
 
 FASPA is transparent on which third party software it relies on. QIIME (up to v.1.9.), LotuS, IMNGS among others rely on different versions of USEARCH and other programs. I think it is important for the user to exactly know the elements of which the pipeline consists, and it is fair for the developer of the third party software used to be credited accordingly. 
 
-Thus, in all cases when you use FASPA, cite:
+Thus, in all cases when you use **FASPA**, cite:
 The USEARCH software
 - Edgar,RC (2010) Search and clustering orders of magnitude faster than BLAST, Bioinformatics 26(19), 2460-2461.
 doi: 10.1093/bioinformatics/btq461
 - Edgar, R.C. (2016), UNCROSS: Filtering of high-frequency cross-talk in 16S amplicon reads. doi: http://dx.doi.org/10.1101/088666
 - Edgar, R.C. (2016), SINTAX, a simple non-Bayesian taxonomy classifier for 16S and ITS sequences, http://dx.doi.org/10.1101/074161.
 
-If you choose to preprocess your raw reads using FASP_preprocessing_v1.sh (the setup for large datasets using VSEARCH), cite:
+If you choose to preprocess your raw reads using *FASP_preprocessing_v1.sh* (the setup for large datasets using VSEARCH), cite:
 - Rognes T, Flouri T, Nichols B, Quince C, Mahé F. (2016) VSEARCH: a versatile open source tool for metagenomics. PeerJ 4:e2584. doi: 10.7717/peerj.2584
 
-If you choose to denoise your sequencesby calling FASP_unoise.sh, cite:
+If you choose to denoise your sequencesby calling *FASP_unoise.sh*, cite:
 - Edgar, R.C. (2016), UNOISE2: Improved error-correction for Illumina 16S and ITS amplicon reads.http://dx.doi.org/10.1101/081257
 
-If you choose to cluster your sequences into OTUs by calling FASP_uparse.sh, cite:
+If you choose to cluster your sequences into OTUs by calling *FASP_uparse.sh*, cite:
 - Edgar, R.C. (2013) UPARSE: Highly accurate OTU sequences from microbial amplicon reads, Nature Methods https://www.nature.com/articles/nmeth.2604
 
-If you choose to perform downstream analysis in R, cite:
-- R-studio citation -> RStudio Team (2015). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL http://www.rstudio.com/.
-The Rhea script collection ->
+If you choose to perform downstream analysis in **R** and **RStudio**, cite:
+- R-core team R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. ISBN 3-900051-07-0, URL http://www.R-project.org.
+- RStudio Team (2015). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL http://www.rstudio.com/.
+The **Rhea** script collection:
 - Lagkouvardos I, Fischer S, Kumar N, Clavel T. (2017) Rhea: a transparent and modular R pipeline for microbial profiling based on 16S rRNA gene amplicons. PeerJ 5:e2836 https://doi.org/10.7717/peerj.2836
-- Phyloseq -> McMurdie and Holmes (2013) phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLoS ONE. 8(4):e61217
+**Phyloseq**: 
+McMurdie and Holmes (2013) phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLoS ONE. 8(4):e61217
 
 # 3. Before we start
 **Download and extract the FASPA script collection**
