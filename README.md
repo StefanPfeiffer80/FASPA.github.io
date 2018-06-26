@@ -1,11 +1,14 @@
+<p>
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_logo.png" width="800" height="150" />
+</p>
+[!Centered text]**FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data**
+.If you have any questions, critics or suggestions, please write me at microbiawesome@gmail.com.  
+- FASPA is a workflow for analysing Illumina paired-end sequence data.   
+- FASPA is a collection of shell bash scripts, perl scripts and R scripts and relies on state of the art programs used in sequence  
+- processing, USEARCH and VSEARCH. FASPA output files are directly in downstream analysis of the data using the phyloseq package in R, the Rhea script collection, or the QIIME software package.   
+- FASPA is distributed without warranty.  
+- For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI:kommt noch  
 
-# FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
-
-If you have any questions, critics or suggestions, please write me at microbiawesome@gmail.com.
-FASPA is a workflow for analysing Illumina paired-end sequence data. 
-FASPA is a collection of shell bash scripts, perl scripts and R scripts and relies on state of the art programs used in sequence processing, USEARCH and VSEARCH. FASPA output files are directly in downstream analysis of the data using the phyloseq package in R, the Rhea script collection, or the QIIME software package.   
-FASPA is distributed without warranty.  
-For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI:kommt noch  
 
 # 1. Introduction
 High-throughput sequencing of the 16S rRNA marker gene is the current benchmark in the characterization of bacterial microbial communities from virtually all environments.  
