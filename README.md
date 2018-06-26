@@ -24,8 +24,7 @@ In a nutshell, **FASPA** manages precarious balance by being very fast, applies 
 As the intention of FASPA is to minimize the personal input by still providing full transparency, this tutorial  
 **Software needed**  
 For the first part of the **FASPA** workflow, the amplicon processing, **FASPA** uses the programs USEARCH v.10.240 and optionally VSEARCH v.2.80. 
-USEARCH by Robert Edgar (Edgar 2010) is a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. Usearch can be downloaded as a single executable file (www.drive5.com/usearch/download.html). USEARCH includes the UPARSE algorithm (Edgar 2013) to cluster OTUs, which showed improved accuracy in OTU assignment towards other commonly used clustering algorithms and was already cited several thousand times. For detailson the clustering algorithm, see here: https://www.drive5.com/usearch/manual/uparseotu_algo.html. In version 9, USEARCH implemented UNOISE (Edgar and Flyvbjerg 2015, Edgar 2016), an algorithm for denoising of raw sequences, which actually means that the genetic variation of sequences is analyzed to find out what causes the sequence variation; whther real sequence differences or sequencing errors. For details see https://www.drive5.com/usearch/manual/unoise_algo.html.  
-Today, denoising of raw amplicon reads becomes more popular especially in hindsight of the known biases that go together with OTU clustering using a 97% sequencing similarity cutoff to differentiate between species. For more information, look at the reviews XXXX  .
+USEARCH by Robert Edgar (Edgar 2010) is a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. USEARCH can be downloaded as a single executable file (www.drive5.com/usearch/download.html). 
 USEARCH however, is free of charge only in the 32 bit version, which holds a 4GB memory cap. While this is not a problem for most datasets (depending on the sample type between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be processed.  For this reason, FASPA includes VSEARCH by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to USEARCH (both USEARCH and VSEARCH are written in C++). For the FASPA workflow, it is evident that you don't use any VSEARCH version prior to v2.8.0.
 
 # 2. Which publications have to be cited when using FASPA?
@@ -63,14 +62,17 @@ This tutorial intends to show an user with verly low bioinformatic experience ho
 Follow this link to set up your system: https://www.wikihow.com/Install-Ubuntu-on-VirtualBox
 
 **Download and extract the FASPA script collection**
-First, go into the folder where you want to perform your analysis. Then, download the FASPA1 scripts to Linux by writing
+First, go into the folder where you want to perform your analysis. This should be the same folder where your fastq-files are. Then, download the FASPA1 scripts to Linux by writing
 ```
 wget https://github.com/StefanPfeiffer80/FASPA.github.io/FASP_1.0.tar.gz
 tar xzf FASP_1.0.tar.gz
 ```
-**Change the primers.fa file according to your needs**
-You will need a file in fasta format that contains the names and sequences of your primer pair.
 
+**Change the primers.fa file according to your needs**
+You will need a file in fasta format that contains the names and sequences of your primer pair. Open the primers.fa file and exchange the primer names and the primer sequences. The forward primer should be always the upper two lines. Then save the file without changing the name.
+<p align="center">
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/prmers.fa.png" width="300" height="160" />
+</p>
 **USEARCH installation**
 1. Go to the USEARCH homepage where you can download the 32-bit version (www.drive5.com/usearch/download.html).
 2. Select the version "USEARCH v.10.0.240", select "Linux", register your email adress.
@@ -80,7 +82,7 @@ You will need a file in fasta format that contains the names and sequences of yo
 5. Run the command ""chmod +x US_10_240" and type in your password to make the file executable
 
 **VSEARCH installation**
-1. Open a terminal and copy paste the text in the box. Keep in mind that you need admin rights to install VSEARCH.  For more information, go to the VSEARCH homepage (https://github.com/torognes/vsearch).
+1. Open a terminal and copy paste the text in the box. Keep in mind that you need admin rights to install VSEARCH.  VSEARCH is updated quite frequently. Thus I recommend to follow the installation instructions at the VSEARCH homepage (https://github.com/torognes/vsearch).
 
 ```wget https://github.com/torognes/vsearch/archive/v2.8.1.tar.gz
 tar xzf v2.8.1.tar.gz
@@ -97,27 +99,68 @@ wget https://www.drive5.com/sintax/rdp_16s_v16.fa.gz
 gunzip rdp_16s_v16.fa.gz
 ```
 
-
-
 # 4. FASPA workflow tutorial
 **Amplicon Processing using the bash scripts *FASP_preprocess_v1.sh, FASP_preprocess_v2.sh, FASP_unoise.sh, FASP_uparse.sh***  
 
-When all needed programs are installed and they are also at their place, amplicon processing with FASPA is pretty easy.
+When all needed programs are installed and they are also at their place, amplicon processing with FASPA can finally start.
 1. Go to your folder where you want to perform your analysis.
-2. List your files by typing "ls" or "ll". Your folder should contain the following :
-Put the bash scripts in the folder where your fastq files are. Your folder should then look somehow like this (+ of course most likely a higher number of .fastq files).
-<p>
+2. List your files by typing "ls" or "ll". Your folder should then look somehow like this (there will be different and of course most likely a higher number of .fastq files).
+<p align="center">
     <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_folder.png" width="620" height="100" />
 </p>
 
 # Amplicon Processing using the bash scripts *FASP_preprocess.sh, FASP_unoise.sh, FASP_uparse.sh -setting parameters*
-Now that all files are in place, we have to configure the files that have to be configured. In this tutorial, we assume that you have a huge number of data, several hundred .fastq files. For this reason, we use FASP_preprocess_v1.sh, which beside USEARCH, applies also VSEARCH for the sequence processing. Also, we assume that we want to denoise raw reads("FASP_unoise.sh") instead of clustering OTUs ("FASP_uparse.sh"). For this reason this tutorial will take 
-
-**FASP_Preprocessing.sh** is a bash script for the preprocessing of raw fastq files based on the programs USEARCH v10.240 and VSEARCH v2.80. Run the script by typing:
+Now that all files are in place, we have to configure the files that have to be configured. Let us first assume that you have a huge number of data, several hundred .fastq files. For this reason, we use *FASP_preprocess_v1.sh*, which beside USEARCH, applies also VSEARCH for the sequence processing. In order to run bash *FASP_preprocess_v1*, we have to set several parameters.  
+These include
+- -l the length of the forward primer
+- -r the length of the reverse primer
+- -m the maximum expected sequence length
+- -s the minimum expected sequence length
 
 ```
-bash FASP_preprocess_2.sh
+bash FASP_preprocess_v1.sh -l 19 -r 19 -m 450 -s 400
 ```
+Now the script starts running. We see that forward and reserve reads are merged, and we see the percentage of reads that are merging. All files will be stored together in one file, named **raw.fq**. Next, FASPA extracts randomly a subset of your reads (by default 100). This is done to check at which position of your sequences the actual primer sequences are found / or not found. At this point the script stops and asks you if you checked the position of your primers and the expected length of your amplicons:
+<p align="center">
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_folder.png" width="620" height="100" />
+</p>
+To answer these questions, we look in our folder and see that a new file appeared, named: *primer_positions.txt*. Open the file with a text editor (in ubuntu by right click, in the terminal by typing "nano primer_positions.txt"). Here you see now a table with four columns:
+
+<p align="center">
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_folder.png" width="620" height="100" />
+</p>
+
+In the left column there is the identifier of the merged readpair, e.g.Stefan5.43832. In the next column, you find the starting position of the primer and in the third column the end position. According to our primer length that we know from the primers.fa file, there should be in our case 19 bases difference between the starting positions and the end position. In the fourth column we see that the primer which was found at positions 1-19 aligned to the + strand / R1 read and the primer which was found at positions >400 aligned to the - strand / R2 read. We can see that not all reads have exactly the same length. That is because we look at a bacterial community, with reads from different microorganisms. Thus, differences in read length are explained via deletions or insertions that characterize different bacterial lineages. For this reason, when you start the script, you should choose minimum and maximum values in a +/- 50bp range around the expected length.  
+Another case that will likely occur when you look into the *primer_positions.txt* list is that for one read only one primer was found. In this case, the read is too short that both primers could be detected.
+
+After we checked that the primers are actually there and found in the expected length, we can choose 1) and press enter. However, if you realized that the provided primer length was wrong or that the expected size of amplicons is lower or higher, you should stop the script here by choosing option 2, and restart the script with the adjusted parameters.
+
+The script continues. First, primers are stripped from the sequences and sequences are filtered for the selceted length. Next, reads that don't reach the minimum quality requirements are filtered out."maybe some more words to quality, here or above" The output file is named *filteredstripped.fa*. Last, unique sequences are extracted and saved as *uniques.fa*. This is done to significantly reduce the datasize for the following denoising or clustering algortihms (Abundance data on how often each read was found is still integrated in the output file). When the script is finished successfully, FASPA tells you that you can continue the amplicon processing by whether denoising of the cleaned raw reads or clustering of OTUs.
+
+**FASP_unoise.sh** or **FASP_uparse.sh**
+In FASPA, you can choose whether you want to denoise your filtered and trimmed raw reads or if you want to cluster OTUs at 97% sequence similarity level.
+USEARCH includes the UPARSE algorithm (Edgar 2013) to cluster OTUs, which showed improved accuracy in OTU assignment towards other commonly used clustering algorithms and was already cited several thousand times. For details on the clustering algorithm, see here: https://www.drive5.com/usearch/manual/uparseotu_algo.html. In version 9, USEARCH implemented UNOISE (Edgar and Flyvbjerg 2015, Edgar 2016), an algorithm for denoising of raw sequences, which actually means that the genetic variation of sequences is analyzed to find out what causes the sequence variation; whether real sequence differences or sequencing errors. For details see https://www.drive5.com/usearch/manual/unoise_algo.html.  
+Today, denoising of raw amplicon reads becomes more popular especially in hindsight of the known biases that go together with OTU clustering using a 97% sequencing similarity cutoff to differentiate between species. For more information, look at the reviews XXXX  .
+
+**FASP_unoise.sh**
+In order to run the bash-script *FASP_unoise.sh*, we have to set one parameter.
+- -i the minimum length of your ZOTUs/OTUs
+
+```
+bash FASP_preprocess_v1.sh -i 350
+```
+
+Using the uniques.fa file as an input, the UNOISE3 algorithm will create denoised raw reads, so called Zero-radius OTUs (ZOTUs). This is most important when you were running *FASP_preprocess_v2.sh*, as there was not length trimming done beforehand. In a similar manner, take as a minimum length a value that is reasonable. e.g, if your amplicon size was around 350 bp, primer stripping results in amplicons of around 310 bp. Assuming your quality scores were high (above 80%), I would, to be on the safe side, set a cutoff at 250 bp.
+Output-file -> *zotus.fa*
+Then the script stops again and asks you if you have checked the expected length of your ZOTUs or OTUs? 
+The raw OTU table is further processed using the USEARCH's UNCROSS algorithm to get rid off wrongly assigned OTUs through cross-talk  More *information see: http://drive5.com/usearch/manual/crosstalk.html*
+c. Taxonomic assignment of the OTUs is done using the SINTAX algorithm (paper) implemented in USEARCH and the rdp_16s_v16.fa database. The SINTAX algorithm uses k-mer similarity (https://en.wikipedia.org/wiki/K-mer) to identify the highest taxonomic ranks and provides an output table with bootstrap confidence values for all predicted taxonomic ranks.
+Further, a raw OTU table is created that is quality checked and We assume that we want to denoise raw reads ("FASP_unoise.sh") instead of clustering OTUs ("FASP_uparse.sh"). For this reason this tutorial will take 
+
+    Unoise3                                            |       Uparse
+-------------------------------------------------------| --------------------------------
+Distinguish correct biological sequence                | 
+from noisy read| Cluster similar reads                 | 97% similarity treshold
 After a while, the script will ask you if you have defined the length of the primers and the expected sequence length.
 Thus we open the **"FASP_precrocess_v1.sh"** script using a text editor (just right click and choose "open with text editor" / if you are using the terminal only you can open by typing:"nano FASP_preprocessin_v1.sh").
 Now you have to look at the positions that are marked whether with "XX" substitute them with the length of your primers. "XXX" have to be replaced with the minimum and maximum expected length of your sequences. See the screenshot for a better understanding:
@@ -139,17 +182,8 @@ c. Trimming of primers, overhangs and quality filtering of the reads based on es
 
 d. Generation of a fasta file containing only unique sequences, the output file is **uniques.fa**
 
-**FASP_unoise.sh** or **FASP_uparse.sh**
-In FASPA, you can choose whether you want to denoise your filtered and trimmed raw reads or if you want to cluster OTUs at97% similarity level. 
-    Unoise3                                            |       Uparse
--------------------------------------------------------| --------------------------------
-Distinguish correct biological sequence from noisy read| Cluster similar reads into OTUs
-no treshold, denoised raw reads                        | 97% similarity treshold
 
-a. Using the uniques.fa file as an input, the unoise3 algorithm will create denoised raw reads, so called Zero-radius OTUs (ZOTUs). Further, a raw OTU table is created that is quality checked and 
 
-b. The raw OTU table is further processed using the USEARCH's UNCROSS algorithm to get rid off wrongly assigned OTUs through cross-talk  More *information see: http://drive5.com/usearch/manual/crosstalk.html*
-c. Taxonomic assignment of the OTUs is done using the SINTAX algorithm (paper) implemented in USEARCH and the rdp_16s_v16.fa database. The SINTAX algorithm uses k-mer similarity (https://en.wikipedia.org/wiki/K-mer) to identify the highest taxonomic ranks and provides an output table with bootstrap confidence values for all predicted taxonomic ranks.
 
  
 
