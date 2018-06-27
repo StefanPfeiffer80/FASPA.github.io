@@ -1,9 +1,7 @@
 <p>
     <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/FASP_logo.png" width="800" height="150" />
 </p>
-<p align="center">
-    FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
-        </p>
+
         
 **What is FASPA?**
 - FASPA is a workflow for analysing Illumina paired-end sequence data.
@@ -13,35 +11,36 @@
 - FASPA is distributed without warranty.  
 - For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI:kommt noch  
 
-
-# 1. Introduction
+**<p align="center">
+    FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
+        </p>**
+# Introduction
 High-throughput sequencing of the 16S rRNA marker gene is the current benchmark in the characterization of bacterial microbial communities from virtually all environments.  
-Here, I present **FASPA -Fast Amplicon Sequence Processing and Analysis**, an amplicon processing workflow that is easy to use and allows in depth-analysis of microbial communities. 
-**FASPA** addresses the need for a transparent pipeline that based on executable bash scripts, perl scripts and  which allows very fast processing (less than 30 minutes on an average speed laptop with 4 GB RAM).
-**FASPA** utilizes the well-known and state of the art bioinformatics tools USEARCH (Edgar 2010) and VSEARCH (Rognes et al. 2016) and gives full transparency on how the tools are applied. 
-**FASPA** also supports the integration of the processed amplicon data in various popular analysis tools, such as QIIME (Caporaso et al. 2010) or the R-based (R-core team, 2008) package collection phyloseq (McMurdie and Holmes, 2013). To gain an overview of the amplicon data (recommended), FASPA includes scripts that format the processed sequence data for direct application of the Rhea pipeline (Lagkouvardo et al. 2016) in R (R-core team, 2008).
-In a nutshell, **FASPA** manages precarious balance by being very fast, applies state of the art bioinformatic tools, having low CPU requirements, offers full transparency for the user by being at the same time easy to use. 
-As the intention of FASPA is to minimize the personal input by still providing full transparency, this tutorial  
-**Software needed**  
-For the first part of the **FASPA** workflow, the amplicon processing, **FASPA** uses the programs USEARCH v.10.240 and optionally VSEARCH v.2.80. 
-USEARCH by Robert Edgar (Edgar 2010) is a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. USEARCH can be downloaded as a single executable file (www.drive5.com/usearch/download.html). 
-USEARCH however, is free of charge only in the 32 bit version, which holds a 4GB memory cap. While this is not a problem for most datasets (depending on the sample type between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be processed.  For this reason, FASPA includes VSEARCH by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to USEARCH (both USEARCH and VSEARCH are written in C++). For the FASPA workflow, it is evident that you don't use any VSEARCH version prior to v2.8.0.
+Here, I present **FASPA - Fast Amplicon Sequence Processing and Analysis**, an amplicon processing workflow that is very easy to use and allows in depth-analysis of microbial communities. 
+FASPA was created to address the need for a pipeline that can be used without prior bioinformatic knowledge, but at the same time provides the user full transparency on which programs were applied and which parameters were used.  
+FASPA is based on executable bash scripts, perl scripts and allows very fast processing (less than 30 minutes for an avergae dataset of ~100 samples on an average speed laptop with 4 GB RAM), and is thus very well suited for the high-throughput analysis of 16S amplicon MiSeq data.
+FASPA utilizes state of the art versions of much used bioinformatics tools USEARCH (Edgar 2010) and VSEARCH (Rognes et al. 2016) for amplicon processing and gives the user full transparency on how the tools are applied. 
+FASPA also supports the integration of the processed amplicon data in various popular analysis tools, such as QIIME (Caporaso et al. 2010) or the R-based (R-core team, 2008) package collection phyloseq (McMurdie and Holmes, 2013). To gain a fast and detailed overview of the data, FASPA includes scripts that format the processed sequence data for direct application into the Rhea pipeline (Lagkouvardos et al. 2016).
+In a nutshell, FASPA manages a precarious balance by being very fast, state of the art, having low CPU requirements, being transparent and at the same time easy to use.   
 
-# 2. Which publications have to be cited when using FASPA?
+**Software needed**  
+The FASPA script collection can be downloaded here. As FASPA relies on third party software workflow, it is necessary that you also install USEARCH v.10.240 (Edgar 2010) and optionally VSEARCH v.2.80 (or higher). 
+USEARCH by Robert Edgar is a program that harbors a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. Many popular pipelines such as QIIME (up to v.1.9.), LotuS, IMNGS among others rely on different versions of USEARCH and other programs. USEARCH however, is free of charge only in the 32 bit version, which holds a 4GB memory cap. While this is not a problem for most datasets (depending on the sample type between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be processed. USEARCH can be downloaded as a single executable file (www.drive5.com/usearch/download.html), see the tutorial for detailed instructions. To analyze larger datasets, FASPA includes VSEARCH by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to USEARCH (both USEARCH and VSEARCH are written in C++). For the FASPA workflow, it is evident that you don't use any VSEARCH version prior to v2.8.0.
+
+# Which publications have to be cited when using FASPA?
 
 For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. (DOI:kommt noch)  
 
-FASPA is transparent on which third party software it relies on. QIIME (up to v.1.9.), LotuS, IMNGS among others rely on different versions of USEARCH and other programs. I think it is important for the user to exactly know the elements of which the pipeline consists, and it is fair for the developer of the third party software used to be credited accordingly. 
+FASPA is transparent on which third party software it relies on.  I think it is important for the user to know which and how programs in the pipeline are applied, and it is fair for the developer of the third party software to be credited accordingly. 
 
-Thus, in all cases when you use **FASPA**, cite:
-The **USEARCH** software
+Thus, in all cases when you use FASPA, cite also the USEARCH software, and also its implemented algorithms UNCROSS and SINTAX.
 - Edgar,RC (2010) Search and clustering orders of magnitude faster than BLAST, Bioinformatics 26(19), 2460-2461.
 doi: 10.1093/bioinformatics/btq461
 - Edgar, R.C. (2016), UNCROSS: Filtering of high-frequency cross-talk in 16S amplicon reads. doi: http://dx.doi.org/10.1101/088666
 - Edgar, R.C. (2016), SINTAX, a simple non-Bayesian taxonomy classifier for 16S and ITS sequences, http://dx.doi.org/10.1101/074161.
 
-If you choose to preprocess your raw reads using *FASP_preprocessing_v1.sh* (the setup for large datasets using **VSEARCH**), cite:
-- Rognes T, Flouri T, Nichols B, Quince C, Mahé F. (2016) VSEARCH: a versatile open source tool for metagenomics. PeerJ 4:e2584. doi: 10.7717/peerj.2584
+If you choose to preprocess your raw reads using *FASP_preprocessing_v1.sh* (the setup for large datasets using VSEARCH), cite:
+- Rognes T, Flouri T, Nichols B, Quince C, Mahé F. (2016) VSEARCH: a versatile open source tool for metagenomics. PeerJ 4:e2584. https://doi.org/10.7717/peerj.2584
 
 If you choose to denoise your sequencesby calling *FASP_unoise.sh*, cite:
 - Edgar, R.C. (2016), UNOISE2: Improved error-correction for Illumina 16S and ITS amplicon reads.http://dx.doi.org/10.1101/081257
@@ -57,7 +56,8 @@ The **Rhea** script collection:
 **Phyloseq**: 
 McMurdie and Holmes (2013) phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLoS ONE. 8(4):e61217
 
-# 3. Before we start
+# FASPA Tutorial
+# 1. Before we start
 This tutorial intends to show an user with verly low bioinformatic experience how to process and analyze 16S amplicon sequencing data on her/his personal computer. As FASPA is based not on Micosoft Windows, but on the Linux operating system, I recommend the installation of a virtual box on your computer, where you can then run a Linux distribution such as Ubuntu. 
 Follow this link to set up your system: https://www.wikihow.com/Install-Ubuntu-on-VirtualBox
 
@@ -99,7 +99,7 @@ wget https://www.drive5.com/sintax/rdp_16s_v16.fa.gz
 gunzip rdp_16s_v16.fa.gz
 ```
 
-# 4. FASPA workflow tutorial
+# 2. FASPA workflow tutorial
 **Amplicon Processing using the bash scripts *FASP_preprocess_v1.sh, FASP_preprocess_v2.sh, FASP_unoise.sh, FASP_uparse.sh***  
 
 When all needed programs are installed and they are also at their place, amplicon processing with FASPA can finally start.
@@ -196,7 +196,7 @@ Using the uniques.fa file as an input, the uparse algorithm will create operatio
 Output files of FASP_uparse.sh: -> zotus.fa
 or OTU clustering (using UPARSE), both part of Usearch v.10.240
 
-# 4. Statistical analysis using R-studio and Rhea
+# 3. Statistical analysis using R-studio and Rhea
 Files which were generated by the workflow can be further analyzed using the widely used statistical language R (R Development Core Team, 2008), and I recommend performing the downstream analysis in the user-friendly Rstudio (RStudio Team 2015). 
 Phyloseq (McMurdie and Holmes, 2013) enjoys great popularity as it allows as its output combines in depth statistical analyses of amplicon sequencing data with high-quality graphs.  
 To gain a first statistical overview however, I recommend the R-script collection Rhea (Lagkouvardos et al. 2016). Rhea can be downloaded from this link (https://lagkouvardos.github.io/Rhea/). With the downloaded files you will also find a .pdf file with detailed instructions on how to use the files.
