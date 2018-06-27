@@ -1,5 +1,5 @@
 <p>
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_logo.png" width="800" height="150" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/FASP_logo.png" width="800" height="150" />
 </p>
 <p align="center">
     FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
@@ -71,7 +71,7 @@ tar xzf FASP_1.0.tar.gz
 **Change the primers.fa file according to your needs**
 You will need a file in fasta format that contains the names and sequences of your primer pair. Open the primers.fa file and exchange the primer names and the primer sequences. The forward primer should be always the upper two lines. Then save the file without changing the name.
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/prmers.fa.png" width="300" height="160" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/prmers.fa.png" width="300" height="160" />
 </p>
 **USEARCH installation**
 1. Go to the USEARCH homepage where you can download the 32-bit version (www.drive5.com/usearch/download.html).
@@ -106,7 +106,7 @@ When all needed programs are installed and they are also at their place, amplico
 1. Go to your folder where you want to perform your analysis.
 2. List your files by typing "ls" or "ll". Your folder should then look somehow like this (there will be different and of course most likely a higher number of .fastq files).
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_folder.png" width="620" height="100" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/FASP_folder.png" width="620" height="100" />
 </p>
 
 # Amplicon Processing using the bash scripts *FASP_preprocess.sh, FASP_unoise.sh, FASP_uparse.sh -setting parameters*
@@ -122,12 +122,12 @@ bash FASP_preprocess_v1.sh -l 19 -r 19 -m 450 -s 400
 ```
 Now the script starts running. We see that forward and reserve reads are merged, and we see the percentage of reads that are merging. All files will be stored together in one file, named **raw.fq**. Next, FASPA extracts randomly a subset of your reads (by default 100). This is done to check at which position of your sequences the actual primer sequences are found / or not found. At this point the script stops and asks you if you checked the position of your primers and the expected length of your amplicons:
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_folder.png" width="620" height="100" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/check.png" width="620" height="100" />
 </p>
 To answer these questions, we look in our folder and see that a new file appeared, named: *primer_positions.txt*. Open the file with a text editor (in ubuntu by right click, in the terminal by typing "nano primer_positions.txt"). Here you see now a table with four columns:
 
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/FASP_folder.png" width="620" height="100" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/primrcheck.png" width="620" height="100" />
 </p>
 
 In the left column there is the identifier of the merged readpair, e.g.Stefan5.43832. In the next column, you find the starting position of the primer and in the third column the end position. According to our primer length that we know from the primers.fa file, there should be in our case 19 bases difference between the starting positions and the end position. In the fourth column we see that the primer which was found at positions 1-19 aligned to the + strand / R1 read and the primer which was found at positions >400 aligned to the - strand / R2 read. We can see that not all reads have exactly the same length. That is because we look at a bacterial community, with reads from different microorganisms. Thus, differences in read length are explained via deletions or insertions that characterize different bacterial lineages. For this reason, when you start the script, you should choose minimum and maximum values in a +/- 50bp range around the expected length.  
@@ -167,7 +167,7 @@ Now you have to look at the positions that are marked whether with "XX" substitu
 
 **IMPORTANT!!!!!!! Positions marked with XX need to be adjusted according to the users need!!!!!!!**
 <p>
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/preprocess_selection.png" width="1000" height="80" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/preprocess_selection.png" width="1000" height="80" />
 </p>
 
 After this is done, save your script and simply run the script as described above.
