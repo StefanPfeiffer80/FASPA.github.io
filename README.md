@@ -85,15 +85,6 @@ You will need a file in fasta format that contains the names and sequences of yo
 **VSEARCH installation**
 1. Open a terminal and copy paste the text in the box. Keep in mind that you need admin rights to install VSEARCH.  VSEARCH is updated quite frequently. Thus I recommend to follow the installation instructions at the VSEARCH homepage (https://github.com/torognes/vsearch).
 
-testlauf, evenuellnehm ich es noch raus!!!
-```wget https://github.com/torognes/vsearch/archive/v2.8.1.tar.gz
-tar xzf v2.8.1.tar.gz
-cd vsearch-2.8.0
-./autogen.sh
-./configure
-make
-make install  # as root or sudo make install
-```
 **16S database for taxonomic assignment**
 FASPA by default uses the RDP_16S_v16 which is also a recommendation for the SINTAX classifier used in FASPA. To download the training set, you can go to the USEARCH homepage: https://www.drive5.com/usearch/manual/sintax_downloads.html.  
 ```
@@ -204,10 +195,19 @@ Last, two scripts are called that create OTU tables with added taxonomic informa
 - *otutab_otus_greengenes.txt*   The otu table *otutab_UN_uncrossed.txt* with taxonomic information added using the greengenes syntax.
 - *otutab_otus_SILVA.txt*   The otu table *otutab_UN_uncrossed.txt* with taxonomic information added using the SILVA syntax.
 
-# 3. Adjusting the FASPA output 
-The addition of negative controls for PCR (and also of negative extraction controls to determine contaminants from extraction kits or sample processing) is crucially important in amplicon library preparation. When it comes to the analyis of the sequencing data, we want to filter out OTUs that derive from the negative controls and contaminate our real biological samples. Although the removal of these contaminant OTUs could be easily automated and included in the FASP scripts, I recommend to investigate your OTU table via a spreedsheet program such as Microsoft Excel or LibreOffice Calc. The reason for this is that by automated filtration you might lose OTUs that may appear 10000 times in particular samples but just once or twice in your control. Knowing that especially highly abundant sample OTUs can appear as false positives in the controls via e.g. crosstalk, it is definitely a good choice to investigate your dataset manually. IN FASPA, although these typically wrongly assigned crosstalk-OTUs are filtered out mostly beforehand thanks to the UNCROSS algorithm (check this out by comparing *otutab_UN_raw.txt* with *otutab_UN_uncrossed.txt*), only a manual check-up will give you certainity. 
+# 3. Removal of contaminant OTUs
+The addition of negative controls for PCR (and also of negative extraction controls to determine contaminants from extraction kits or sample processing) is crucially important in amplicon library preparation. When it comes to the analyis of the sequencing data, we want to filter out OTUs that derive from the negative controls and contaminate our real biological samples. Although the removal of these contaminant OTUs could be easily automated and included in the FASP scripts, I recommend to investigate your OTU table via a spreedsheet program such as Microsoft Excel or LibreOffice Calc. The reason for this is that by automated filtration you might lose OTUs that may appear 10000 times in particular samples but just once or twice in your control. Knowing that especially highly abundant sample OTUs can appear as false positives in the controls via e.g. crosstalk, it is definitely a good choice to investigate your dataset manually. In FASPA, although these typically wrongly assigned crosstalk-OTUs are filtered out mostly beforehand thanks to the UNCROSS algorithm (check this out by comparing *otutab_UN_raw.txt* with *otutab_UN_uncrossed.txt*), only a manual check-up will give you certainity. When you identified your contaminant OTUs, simply delete them from all samples and then also the now empty control samples. Save the table with a new name, e.g. *otutab_UN_uncrossed_filt.txt*.  
+Then run the script *FASP_tax_filtered.pl*
 
-You can change parameters.
+```
+perl ./FASP_tax_filtered.pl otutab_UN_uncrossed_filt.txt SINTAX_OTUS_RDP_FILT.txt SINTAX_OTUS_RDP_FILT2.txt
+```
+By this script, OTUs that were removed by taking out contaminants from the negative control, are also taken out from the taxonomy file.
+(output = *SINTAX_OTUS_RDP_FILT2*).
+
+
+**Changing parameters**
+FASPA files can be adjusted to your personal needs and preferences.
 <p>
     <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/preprocess_selection.png" width="1000" height="80" />
 </p>
