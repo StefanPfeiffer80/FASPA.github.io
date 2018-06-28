@@ -123,7 +123,10 @@ Preprocessing includes:
 - preparing a set of unique sequences
 
 For small and medium sized 16S amplicon libraries of up to 100 samples, the script *FASP_preprocess_v1.sh* can be called. The advantage is that vsearch does not need to be installed, as *FASP_preprocess_v1.sh* uses the 32 bit version of USEARCH which has a 4GB memory cap. Thus, *FASP_preprocess_v1.sh* should be only used if you have a relatively small dataset.  
-For running *FASP_preprocess_v1.sh*
+For running *FASP_preprocess_v1.sh*, you have to set to tell FASPA the length of the primers you are using primer. In the example below we use the primer pair by Nossa et al. (2010), wheras the forward primer (-l) consists of 20 nucleotides, and the reverse primer (-r)  of 19. 
+```
+bash FASP_preprocess_v1.sh -l 19 -r 20
+```
 
 If we assume that you have a huge number of data, several hundred .fastq files, we use *FASP_preprocess_v2.sh*, which beside USEARCH, applies also the open source software VSEARCH for the sequence processing. In order to run bash *FASP_preprocess_v2.sh*, we have to set several parameters.  
 These include
@@ -132,11 +135,11 @@ These include
 - -m the maximum expected sequence length
 - -s the minimum expected sequence length
 
-In the example below we use the primer pair by Nossa et al. (2010), comprising a length of ~450 bp. Both primers have a length of 19 nucleotides, and thus the the expected length of the sequence is around 410 bp
+In the example below we use again the primer pair by Nossa et al. (2010), which confines an expected amplicon length of ~450 bp. Both primers have a length of 19 nucleotides, and thus the the expected length of the sequence is around 410 bp
 ```
-bash FASP_preprocess_v1.sh -l 19 -r 19 -m 450 -s 390
+bash FASP_preprocess_v2.sh -l 19 -r 19 -m 450 -s 390
 ```
-Now the script starts running. We see that forward and reserve reads are merged, and we see the percentage of reads that are merging. All files will be stored together in one file, named **raw.fq**. Next, FASPA extracts randomly a subset of your reads (by default 100). This is done to check at which position of your sequences the actual primer sequences are found / or not found. At this point the script stops and asks you if you checked the position of your primers and the expected length of your amplicons:
+Now the script starts running. We see that forward and reserve reads are merged, and we see the percentage of reads that are merging. All files will be stored together in one file, named **raw.fq**. Next, FASPA extracts randomly a subset of your reads (by default 100). This is done to check at which position of your sequences the actual primer sequences are found / or not found. At this point the script stops and asks you if you checked the position and size of your primers and the expected length of your amplicons:
 <p align="center">
     <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/check.png" width="620" height="100" />
 </p>
@@ -149,62 +152,72 @@ To answer these questions, we look in our folder and see that a new file appeare
 In the left column there is the identifier of the merged readpair, e.g.Stefan5.43832. In the next column, you find the starting position of the primer and in the third column the end position. According to our primer length that we know from the primers.fa file, there should be in our case 19 bases difference between the starting positions and the end position. In the fourth column we see that the primer which was found at positions 1-19 aligned to the + strand / R1 read and the primer which was found at positions >400 aligned to the - strand / R2 read. We can see that not all reads have exactly the same length. That is because we look at a bacterial community, with reads from different microorganisms. Thus, differences in read length are explained via deletions or insertions that characterize different bacterial lineages. For this reason, when you start the script, you should choose minimum and maximum values in an at least +/- 50bp range around the expected length.  
 Another case that will likely occur when you look into the *primer_positions.txt* list is that for one read only one primer was found. In this case, the read is too short that both primers could be detected.
 
-After we checked that the primers are actually there and found in the expected length, we can choose 1) and press enter. However, if you realized that the provided primer length was wrong or that the expected size of amplicons is lower or higher, you should stop the script here by choosing option 2, and restart the script with the adjusted parameters.
+After we checked that the primers are actually there and found in the expected length, we can choose 1) and press the enter key. However, if you realized that the provided primer length was wrong or that the expected size of amplicons is lower or higher, you should stop the script here by choosing option 2, and restart the script with the corrected parameters.
 
-The script continues. First, primers are stripped from the sequences and sequences are filtered for the selceted length. Next, reads that don't reach the minimum quality requirements are filtered out."maybe some more words to quality, here or above" The output file is named *filteredstripped.fa*. Last, unique sequences are extracted and saved as *uniques.fa*. This is done to significantly reduce the datasize for the following denoising or clustering algortihms (Abundance data on how often each read was found is still integrated in the output file). When the script is finished successfully, FASPA tells you that you can continue the amplicon processing by whether denoising of the cleaned raw reads or clustering of OTUs.
+The script continues. First, primers are stripped from the sequences and sequences are filtered for the selceted length. Next, reads that don't reach the minimum quality requirements are filtered out.". Last, unique sequences are extracted and saved as *uniques.fa*. This is done to significantly reduce the datasize for the following denoising or clustering algortihms (Abundance data on how often each read was found is still integrated in the output file). When the script is finished successfully, FASPA tells you that you can continue the amplicon processing by whether denoising of the cleaned raw reads or clustering of OTUs.
+
+*Output files*
+- *raw.fq*          All paired reads merged and stored in one file. More information: http://drive5.com/usearch/manual/merge_pair.html
+- *raw_info.txt*    Provides information on the length distribution of reads (min, max, median, average) and the mean estimated error rates
+- *qualrawfq.txt*   EE values (=sum of error probabilities) are created to indicate the probability contains errors. The default set in the script is set to 1.0, which corresponds to zero errors. You can manually change the parameter when you open the script in a text editor. Lower values e.g. 0.5 are more stringent. For more information: http://drive5.com/usearch/manual/exp_errs.html. 
+- *strippedraw.fq*  The *raw.fq* file with the primer sequences removed.
+- *filtered.fa*     The *strippedraw.fq* file with low quality reads removed. Note that this is a fasta file, not a fastq file.
+- *uniques.fa*      This file contains the uniques sequences of *filtered.fa*.
 
 **FASP_unoise.sh** or **FASP_uparse.sh**
-In FASPA, you can choose whether you want to denoise your filtered and trimmed raw reads or if you want to cluster OTUs at 97% sequence similarity level.
+In FASPA, you can choose whether you want to denoise your preprocessed raw reads or if you want to cluster OTUs at 97% sequence similarity level.
 USEARCH includes the UPARSE algorithm (Edgar 2013) to cluster OTUs, which showed improved accuracy in OTU assignment towards other commonly used clustering algorithms and was already cited several thousand times. For details on the clustering algorithm, see here: https://www.drive5.com/usearch/manual/uparseotu_algo.html. In version 9, USEARCH implemented UNOISE (Edgar and Flyvbjerg 2015, Edgar 2016), an algorithm for denoising of raw sequences, which actually means that the genetic variation of sequences is analyzed to find out what causes the sequence variation; whether real sequence differences or sequencing errors. For details see https://www.drive5.com/usearch/manual/unoise_algo.html.  
 Today, denoising of raw amplicon reads becomes more popular especially in hindsight of the known biases that go together with OTU clustering using a 97% sequencing similarity cutoff to differentiate between species. For more information, look at the reviews !!(XXXX)). Under perfect circumstances denoising will always yield more OTUs than clustering at the 97% species level, as different strains of one species should be identified by denoising (which is not the case in reality often). To figure this out, I recommend to have one mock community of known bacterial strains in your samples to analyze, and compare the results of denoising with OTU clustering.
 In this tutorial, I expl
 
 **FASP_unoise.sh** and **FASP_uparse.sh**
-In order to run the bash-script *FASP_unoise.sh* or *FASP_uparse.sh*, we have to set one parameter.
+In order to run the bash-script *FASP_unoise.sh* or *FASP_uparse.sh*, we have to set one parameter:
 - -i the minimum length of your ZOTUs/OTUs
 
 ```
 bash FASP_unoise.sh -i 350
+#OR
+bash FASP_uparse.sh -i 350
 ```
 
-Using the uniques.fa file as an input, the UNOISE3 algorithm will create denoised raw reads, so called Zero-radius OTUs (ZOTUs). This is most important when you were running *FASP_preprocess_v2.sh*, as there was not length trimming done beforehand. In a similar manner, take as a minimum length a value that is reasonable. e.g, if your amplicon size was around 350 bp, primer stripping results in amplicons of around 310 bp. Assuming your quality scores were high (above 80%), I would, to be on the safe side, set a cutoff at 250 bp.
-Output-file -> *zotus.fa*
+Using the *uniques.fa* file as an input, the UNOISE3 algorithm will create denoised raw reads, so called Zero-radius OTUs (ZOTUs). 
 Then the script stops again and asks you if you have checked the expected length of your ZOTUs or OTUs? 
-The raw OTU table is further processed using the USEARCH's UNCROSS algorithm to get rid off wrongly assigned OTUs through cross-talk  More *information see: http://drive5.com/usearch/manual/crosstalk.html*
-c. Taxonomic assignment of the OTUs is done using the SINTAX algorithm (paper) implemented in USEARCH and the rdp_16s_v16.fa database. The SINTAX algorithm uses k-mer similarity (https://en.wikipedia.org/wiki/K-mer) to identify the highest taxonomic ranks and provides an output table with bootstrap confidence values for all predicted taxonomic ranks.
-Further, a raw OTU table is created that is quality checked and We assume that we want to denoise raw reads ("FASP_unoise.sh") instead of clustering OTUs ("FASP_uparse.sh"). For this reason this tutorial will take 
+This is most important when you were running *FASP_preprocess_v1.sh*, as there was not length trimming done beforehand and your file might contain relatively short ZOTUs/OTUs. If everything is alrgight, choose option 1) and press the enter key. 
 
-    Unoise3                                            |       Uparse
--------------------------------------------------------| --------------------------------
-Distinguish correct biological sequence                | 
-from noisy read| Cluster similar reads                 | 97% similarity treshold
-After a while, the script will ask you if you have defined the length of the primers and the expected sequence length.
-Thus we open the **"FASP_precrocess_v1.sh"** script using a text editor (just right click and choose "open with text editor" / if you are using the terminal only you can open by typing:"nano FASP_preprocessin_v1.sh").
-Now you have to look at the positions that are marked whether with "XX" substitute them with the length of your primers. "XXX" have to be replaced with the minimum and maximum expected length of your sequences. See the screenshot for a better understanding:
+Next FASPA creates an OTU table (or ZOTU table, but for simplicity we will use OTU for both ZOTU and OTU from now on) out of the OTUs and the raw reads. The OTU table is a ext file which can be opended in any spreadsheet program and also coincides to the format of QIIME classic OTU tables. Sample IDs are displayed in columns and OTUs are displayed in rows.
+Next, the raw OTU table is further processed using the USEARCH's UNCROSS (Edgar 2016) algorithm to get rid off wrongly assigned OTUs through cross-talk. For more information crosstalk see: http://drive5.com/usearch/manual/crosstalk.html. Taxonomic assignment of the OTUs is done using the SINTAX algorithm (Edgar 2016) and the rdp_16s_v16.fa database. The SINTAX algorithm uses k-mer similarity (https://en.wikipedia.org/wiki/K-mer) to identify the highest taxonomic ranks and provides an output table with bootstrap confidence values for all predicted taxonomic ranks. If you want to use another database, adjust the input file for the taxonomic databae "-db" at #7 of the FASP_unoise.sh/FASP_uparse.sh script. Also you can adjust the cutoff value "-sintax_cutoff" which is set to 0.5 by default (corresponds to 50% bootstrap support).
 
-**IMPORTANT!!!!!!! Positions marked with XX need to be adjusted according to the users need!!!!!!!**
+Maybe a picture here?
+
+In FASPA, SINTAX assigned OTUs are filtered from the taxonomy file for OTUs that are not occurring in the OTU table (e.g. OTUs that were filtered out following the UNCROSS algorithm) to avoid cover inequality of the OTU table and the taxonomic data. Next, a phylogenetic tree in Newick format (https://en.wikipedia.org/wiki/Newick_format is constructed via creation of a distance matrix and agglomerative clustering, that will be later used to calculate UNIFRAC distances for diversity analyses.
+Last, two scripts are called that create OTU tables with added taxonomic information. One table, *otutab_otus_greengenes.txt* contains taxonomic information in the greengenes syntax, the other one, *otutab_otus_SILVA.txt*, contains taxonomic information using the SILVA syntax. These files might be useful if you want to perform downstream analysis in QIIME or if you want to predict hypothetical metagenomic information with PICRUSt (Langille et al. 2013).
+
+*Output files*      *UN* as in *utUN.txt* relates to *FASP_unoise.sh*, *UP* as on *outUP.txt* relates to*FASP_uparse.sh*
+- *ZOTUS.fa* or *OTUS.fa*         Fasta sequences of denoised reads (Zotus.fa) or clustered OTUs (Otus.fa)
+- *otus_sorted_UN.fasta*    OTUs filtered by minimum length set by parameter -i
+- *otutab_UN_raw.txt*       Raw OTU table
+- *otutab_UN_uncrossed.txt* OTU table corrected for sequencing errors by crosstalk-filtration.
+- *otutab_UN_uncrossed_stats.txt*               Statistics of the OTU table *otutab_UN_uncrossed.txt*. Contains information such as total number of reads, number of OTUs and core OTUs (OTUs that occur in 100%, 90% and 50% of samples)
+- *sintaxzotusrdp.txt* Taxonomic assignment of OTUs (*otus_soretd_UN_fasta*) using the rdp_16s_v16.fa database (default), including bootstrap values generated.
+- *SINTAX_OTUS_RDP_FILT.txt*    Adjusted output of *sintazotusrdp.txt* to match the number of OTUs in the OTU table, after performing the *FASP_tax_filtered.pl* command.
+- *Tree_UN.tree*    A tree file in the Newick format that can be used in downstream analyis.
+- *otutab_otus_greengenes.txt*   The otu table *otutab_UN_uncrossed.txt* with taxonomic information added using the greengenes syntax.
+- *otutab_otus_SILVA.txt*   The otu table *otutab_UN_uncrossed.txt* with taxonomic information added using the SILVA syntax.
+
+# 3. Adjusting the FASPA output 
+The addition of negative controls for PCR (and also of negative extraction controls to determine contaminants from extraction kits or sample processing) is crucially important in amplicon library preparation. When it comes to the analyis of the sequencing data, we want to filter out OTUs that derive from the negative controls and contaminate our real biological samples. Although the removal of these contaminant OTUs could be easily automated and included in the FASP scripts, I recommend to investigate your OTU table via a spreedsheet program such as Microsoft Excel or LibreOffice Calc. The reason for this is that by automated filtration you might lose OTUs that may appear 10000 times in particular samples but just once or twice in your control. Knowing that especially highly abundant sample OTUs can appear as false positives in the controls via e.g. crosstalk, it is definitely a good choice to investigate your dataset manually. IN FASPA, although these typically wrongly assigned crosstalk-OTUs are filtered out mostly beforehand thanks to the UNCROSS algorithm (check this out by comparing *otutab_UN_raw.txt* with *otutab_UN_uncrossed.txt*), only a manual check-up will give you certainity. 
+
+You can change parameters.
 <p>
     <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/preprocess_selection.png" width="1000" height="80" />
 </p>
 
-After this is done, save your script and simply run the script as described above.
-
-What happens by running **FASP_preprocess_v1.sh** or **FASP_preprocess_v2.sh**?
-
-a. Forward and reverse paired-end reads are merged and then all merged reads are put into one single .fastq file. The output file is named **raw.fq** -> more information http://drive5.com/usearch/manual/merge_pair.html. Further, an info file on the single merged file is created, named **raw_info.txt**
-
-b. Expected Error rates (EE values) are created which indicates the probability if a particular base is right or wrong. The output file is named **qualrawfq.txt**. If you open the script in a text editor, you can change the treshold on EE values whether to 0.5 (more stringent) or 2.0 (less stringent). For more information  on http://drive5.com/usearch/manual/exp_errs.html 
-
-c. Trimming of primers, overhangs and quality filtering of the reads based on estimated error rates. The output file if we execute **FASP_preprocess_v1** is **vsearchfilteredstripped.fa**, while for **FASP_preprocess.sh** there are several output files: **strippedraw.fq** following trimming, and **filteredstripped.fa** following the subsequent quality filtering.  
-
-d. Generation of a fasta file containing only unique sequences, the output file is **uniques.fa**
 
 
 
 
  
 
-Further, a phylogenetic tree in Newick-format (https://en.wikipedia.org/wiki/Newick_format is constructed via creation of a distance matrix and agglomerative clustering.
 Output files of FASP_unoise.sh: -> zotus.fa
 
 3.	FASP_uparse.sh
