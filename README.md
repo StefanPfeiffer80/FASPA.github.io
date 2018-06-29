@@ -103,7 +103,7 @@ When all needed programs are installed and they are also at their place, amplico
 1. Go to your folder where you want to perform your analysis.
 2. List your files by typing "ls" or "ll". Your folder should then look somehow like this (there will be different and of course I assume a higher number of .fastq files). Bild muss mit filenames updated werden!!!
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/FASP_folder1.png" width="620" height="500" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/fasp_folder1.png" width="620" height="500" />
 </p>
 
 Now that all files are in place, we have to configure the files that have to be configured. 
@@ -141,7 +141,7 @@ Now the script starts running. We see that forward and reserve reads are merged,
 To answer these questions, we look in our folder and see that a new file appeared, named: *primer_positions.txt*. Open the file with a text editor (in ubuntu by right click, in the terminal by typing "nano primer_positions.txt"). Here you see now a table with four columns:
 
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/primrcheck.png" width="500" height="600" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/primrcheck.png" width="500" height="400" />
 </p>
 
 In the left column there is the identifier of the merged readpair, e.g.Stefan5.43832. In the next column, you find the starting position of the primer and in the third column the end position. According to our primer length that we know from the primers.fa file, there should be in our case 19 bases difference between the starting positions and the end position. In the fourth column we see that the primer which was found at positions 1-19 aligned to the + strand / R1 read and the primer which was found at positions >400 aligned to the - strand / R2 read. We can see that not all reads have exactly the same length. That is because we look at a bacterial community, with reads from different microorganisms. Thus, differences in read length are explained via deletions or insertions that characterize different bacterial lineages. For this reason, when you start the script, you should choose minimum and maximum values in an at least +/- 50bp range around the expected length.  
@@ -162,10 +162,7 @@ The script continues. First, primers are stripped from the sequences and sequenc
 **FASP_unoise.sh** or **FASP_uparse.sh**
 In FASPA, you can choose whether you want to denoise your preprocessed raw reads or if you want to cluster OTUs at 97% sequence similarity level.
 USEARCH includes the UPARSE algorithm (Edgar 2013) to cluster OTUs, which showed improved accuracy in OTU assignment towards other commonly used clustering algorithms and was already cited several thousand times. For details on the clustering algorithm, see here: https://www.drive5.com/usearch/manual/uparseotu_algo.html. In version 9, USEARCH implemented UNOISE (Edgar and Flyvbjerg 2015, Edgar 2016), an algorithm for denoising of raw sequences, which actually means that the genetic variation of sequences is analyzed to find out what causes the sequence variation; whether real sequence differences or sequencing errors. For details see https://www.drive5.com/usearch/manual/unoise_algo.html.  
-Today, denoising of raw amplicon reads becomes more popular especially in hindsight of the known biases that go together with OTU clustering using a 97% sequencing similarity cutoff to differentiate between species. For more information, look at the reviews !!(XXXX)). Under perfect circumstances denoising will always yield more OTUs than clustering at the 97% species level, as different strains of one species should be identified by denoising (which is not the case in reality often). To figure this out, I recommend to have one mock community of known bacterial strains in your samples to analyze, and compare the results of denoising with OTU clustering.
-In this tutorial, I expl
-
-**FASP_unoise.sh** and **FASP_uparse.sh**
+Today, denoising of raw amplicon reads becomes more popular especially in hindsight of the known biases that go together with OTU clustering using a 97% sequencing similarity cutoff to differentiate between species. Under perfect circumstances denoising will always yield more OTUs than clustering at the 97% species level, as different strains of one species should be identified by denoising (which is not the case in reality often). To figure this out, I recommend to have one mock community of known bacterial strains in your samples to analyze, and compare the results of denoising with OTU clustering.
 In order to run the bash-script *FASP_unoise.sh* or *FASP_uparse.sh*, we have to set one parameter:
 - -i the minimum length of your ZOTUs/OTUs
 
@@ -183,7 +180,7 @@ Next FASPA creates an OTU table (or ZOTU table, but for simplicity we will use O
 Next, the raw OTU table is further processed using the USEARCH's UNCROSS (Edgar 2016) algorithm to get rid off wrongly assigned OTUs through cross-talk. For more information crosstalk see: http://drive5.com/usearch/manual/crosstalk.html. Taxonomic assignment of the OTUs is done using the SINTAX algorithm (Edgar 2016) and the rdp_16s_v16.fa database. The SINTAX algorithm uses k-mer similarity (https://en.wikipedia.org/wiki/K-mer) to identify the highest taxonomic ranks and provides an output table with bootstrap confidence values for all predicted taxonomic ranks. If you want to use another database, adjust the input file for the taxonomic databae "-db" at #7 of the FASP_unoise.sh/FASP_uparse.sh script. Also you can adjust the cutoff value "-sintax_cutoff" which is set to 0.5 by default (corresponds to 50% bootstrap support).
 
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/FASP_edit" width="600" height="150" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/FASP_edit.png" width="620" height="80" />
 </p>
 
 In FASPA, SINTAX assigned OTUs are filtered from the taxonomy file for OTUs that are not occurring in the OTU table (e.g. OTUs that were filtered out following the UNCROSS algorithm) to avoid cover inequality of the OTU table and the taxonomic data. Next, a phylogenetic tree in Newick format (https://en.wikipedia.org/wiki/Newick_format is constructed via creation of a distance matrix and agglomerative clustering, that will be later used to calculate UNIFRAC distances for diversity analyses.
@@ -226,7 +223,7 @@ Create the file location (In Windows or Linux) where you want to perform your an
 In this folder you have to prepare six empty folders, named exactly as shown in the picture below.
 
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/Rhea_R_folder" width="400" height="400" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/Rhea_R_folder.png" width="620" height="200" />
 </p>
 
 **FASPA output files needed**
