@@ -6,19 +6,21 @@
 **<p align="center">
     What is FASPA?
     </p>**
+    
 - FASPA is a workflow for analysing Illumina paired-end sequence data.    
 - FASPA is a collection of shell bash scripts, perl scripts and R scripts and relies on state of the art programs used in sequence  
 - processing, USEARCH and VSEARCH. FASPA output files are directly in downstream analysis of the data using the phyloseq package in R, the Rhea script collection, or the QIIME software package.   
 - FASPA is distributed without warranty.  
 - For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI:kommt noch 
 - If you have any questions, critics or suggestions, please write me at microbiawesome@gmail.com.
+
 **<p align="center">
     FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
         </p>**
 # Introduction
 High-throughput sequencing of the 16S rRNA marker gene is the current benchmark in the characterization of bacterial microbial communities from virtually all environments.  
-Here, I present **FASPA - Fast Amplicon Sequence Processing and Analysis**, an amplicon processing workflow that is very easy to use and allows in depth-analysis of microbial communities. 
-FASPA was created to address the need for a pipeline that can be used without prior bioinformatic knowledge, but at the same time provides the user full transparency on which programs were applied and which parameters were used.  
+Here, I present **FASPA - Fast Amplicon Sequence Processing and Analysis**, an amplicon processing workflow that is easy to use and allows in depth-analysis of microbial communities. 
+FASPA was created to address the need for a pipeline that can be used without prior bioinformatic knowledge, provides the user full transparency on which programs were applied and which parameters were used and at the same time allows to adjust and expand the pipeline according to the users needs.  
 FASPA is based on executable bash scripts, perl scripts and allows very fast processing (less than 30 minutes for an avergae dataset of ~100 samples on an average speed laptop with 4 GB RAM), and is thus very well suited for the high-throughput analysis of 16S amplicon MiSeq data.
 FASPA utilizes state of the art versions of much used bioinformatics tools USEARCH (Edgar 2010) and VSEARCH (Rognes et al. 2016) for amplicon processing and gives the user full transparency on how the tools are applied. 
 FASPA also supports the integration of the processed amplicon data in various popular analysis tools, such as QIIME (Caporaso et al. 2010) or the R-based (R-core team, 2008) package collection phyloseq (McMurdie and Holmes, 2013). To gain a fast and detailed overview of the data, FASPA includes scripts that format the processed sequence data for direct application into the Rhea pipeline (Lagkouvardos et al. 2016).
@@ -226,12 +228,14 @@ In this folder you have to prepare six empty folders, named exactly as shown in 
 </p>
 
 **FASPA output files needed**
-For simplicity, the tutorial deals with the output files of **FASP_unoise.sh**.
+For simplicity, the tutorial deals with the output files of **FASP_unoise.sh**. 
 - *Tree_UN.tree*
 - *SINTAX_OTUS_RDP_UN_FILT.txt*
 - *otutab_UN_uncrossed.txt*
-- *mapping_file.tab*
+- *mapping_file.tab*  The mapping file contains all metainformation of your samples, including categorical and numerical variables. You can find an example mapping file here.
 
+**Preparation of FASPA output files for phyloseq and Rhea**
+First, you have to set your working directory. Then 
 
 
 # 6. Changing parameters
