@@ -103,7 +103,7 @@ When all needed programs are installed and they are also at their place, amplico
 1. Go to your folder where you want to perform your analysis.
 2. List your files by typing "ls" or "ll". Your folder should then look somehow like this (there will be different and of course I assume a higher number of .fastq files). Bild muss mit filenames updated werden!!!
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/FASP_folder.png" width="620" height="100" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/FASP_folder1.png" width="620" height="500" />
 </p>
 
 Now that all files are in place, we have to configure the files that have to be configured. 
@@ -141,7 +141,7 @@ Now the script starts running. We see that forward and reserve reads are merged,
 To answer these questions, we look in our folder and see that a new file appeared, named: *primer_positions.txt*. Open the file with a text editor (in ubuntu by right click, in the terminal by typing "nano primer_positions.txt"). Here you see now a table with four columns:
 
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/primrcheck.png" width="620" height="100" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/primrcheck.png" width="500" height="600" />
 </p>
 
 In the left column there is the identifier of the merged readpair, e.g.Stefan5.43832. In the next column, you find the starting position of the primer and in the third column the end position. According to our primer length that we know from the primers.fa file, there should be in our case 19 bases difference between the starting positions and the end position. In the fourth column we see that the primer which was found at positions 1-19 aligned to the + strand / R1 read and the primer which was found at positions >400 aligned to the - strand / R2 read. We can see that not all reads have exactly the same length. That is because we look at a bacterial community, with reads from different microorganisms. Thus, differences in read length are explained via deletions or insertions that characterize different bacterial lineages. For this reason, when you start the script, you should choose minimum and maximum values in an at least +/- 50bp range around the expected length.  
@@ -149,10 +149,10 @@ Another case that will likely occur when you look into the *primer_positions.txt
 
 After we checked that the primers are actually there and found in the expected length, we can choose 1) and press the enter key. However, if you realized that the provided primer length was wrong or that the expected size of amplicons is lower or higher, you should stop the script here by choosing option 2, and restart the script with the corrected parameters.
 
-The script continues. First, primers are stripped from the sequences and sequences are filtered for the selceted length. Next, reads that don't reach the minimum quality requirements are filtered out.". Last, unique sequences are extracted and saved as *uniques.fa*. This is done to significantly reduce the datasize for the following denoising or clustering algortihms (Abundance data on how often each read was found is still integrated in the output file). When the script is finished successfully, FASPA tells you that you can continue the amplicon processing by whether denoising of the cleaned raw reads or clustering of OTUs.
+The script continues. First, primers are stripped from the sequences and sequences are filtered for the selceted length. Next, reads that don't reach the minimum quality requirements are filtered out. Last, unique sequences are extracted and saved as *uniques.fa*. This is done to significantly reduce the datasize for the following denoising or clustering algortihms (Abundance data on how often each read was found is still integrated in the output file). When the script is finished successfully, FASPA tells you that you can continue the amplicon processing by whether denoising of the cleaned raw reads or clustering of OTUs.
 
 *Output files*
-- *raw.fq*          All paired reads merged and stored in one file. More information: http://drive5.com/usearch/manual/merge_pair.html
+- *raw.fq*          All paired reads merged and stored in one file. 
 - *raw_info.txt*    Provides information on the length distribution of reads (min, max, median, average) and the mean estimated error rates
 - *qualrawfq.txt*   EE values (=sum of error probabilities) are created to indicate the probability contains errors. The default set in the script is set to 1.0, which corresponds to zero errors. You can manually change the parameter when you open the script in a text editor. Lower values e.g. 0.5 are more stringent. For more information: http://drive5.com/usearch/manual/exp_errs.html. 
 - *strippedraw.fq*  The *raw.fq* file with the primer sequences removed.
@@ -182,7 +182,9 @@ This is most important when you were running *FASP_preprocess_v1.sh*, as there w
 Next FASPA creates an OTU table (or ZOTU table, but for simplicity we will use OTU for both ZOTU and OTU from now on) out of the OTUs and the raw reads. The OTU table is a ext file which can be opended in any spreadsheet program and also coincides to the format of QIIME classic OTU tables. Sample IDs are displayed in columns and OTUs are displayed in rows.
 Next, the raw OTU table is further processed using the USEARCH's UNCROSS (Edgar 2016) algorithm to get rid off wrongly assigned OTUs through cross-talk. For more information crosstalk see: http://drive5.com/usearch/manual/crosstalk.html. Taxonomic assignment of the OTUs is done using the SINTAX algorithm (Edgar 2016) and the rdp_16s_v16.fa database. The SINTAX algorithm uses k-mer similarity (https://en.wikipedia.org/wiki/K-mer) to identify the highest taxonomic ranks and provides an output table with bootstrap confidence values for all predicted taxonomic ranks. If you want to use another database, adjust the input file for the taxonomic databae "-db" at #7 of the FASP_unoise.sh/FASP_uparse.sh script. Also you can adjust the cutoff value "-sintax_cutoff" which is set to 0.5 by default (corresponds to 50% bootstrap support).
 
-Maybe a picture here?
+<p align="center">
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/FASP_edit" width="600" height="150" />
+</p>
 
 In FASPA, SINTAX assigned OTUs are filtered from the taxonomy file for OTUs that are not occurring in the OTU table (e.g. OTUs that were filtered out following the UNCROSS algorithm) to avoid cover inequality of the OTU table and the taxonomic data. Next, a phylogenetic tree in Newick format (https://en.wikipedia.org/wiki/Newick_format is constructed via creation of a distance matrix and agglomerative clustering, that will be later used to calculate UNIFRAC distances for diversity analyses.
 Last, two scripts are called that create OTU tables with added taxonomic information. One table, *otutab_otus_greengenes.txt* contains taxonomic information in the greengenes syntax, the other one, *otutab_otus_SILVA.txt*, contains taxonomic information using the SILVA syntax. These files might be useful if you want to perform downstream analysis in QIIME or if you want to predict hypothetical metagenomic information with PICRUSt (Langille et al. 2013).
@@ -224,7 +226,7 @@ Create the file location (In Windows or Linux) where you want to perform your an
 In this folder you have to prepare six empty folders, named exactly as shown in the picture below.
 
 <p align="center">
-    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/" width="620" height="100" />
+    <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/Rhea_R_folder" width="400" height="400" />
 </p>
 
 **FASPA output files needed**
