@@ -28,7 +28,7 @@ In a nutshell, FASPA manages a precarious balance by being very fast, state of t
 
 **Software needed**  
 The FASPA script collection can be downloaded here. As FASPA relies on third party software workflow, it is necessary that you also install USEARCH v.10.240 (Edgar 2010) and optionally VSEARCH v.2.80 (or higher). 
-USEARCH by Robert Edgar is a program that harbors a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. Many popular pipelines such as QIIME (up to v.1.9.), LotuS, IMNGS among others rely on different versions of USEARCH and other programs. USEARCH however, is free of charge only in the 32 bit version, which holds a 4GB memory cap. While this is not a problem for most datasets (depending on the sample type between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be processed. USEARCH can be downloaded as a single executable file (www.drive5.com/usearch/download.html), see the tutorial for detailed instructions. To analyze larger datasets, FASPA includes VSEARCH by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to USEARCH (both USEARCH and VSEARCH are written in C++). For the FASPA workflow, it is evident that you don't use any VSEARCH version prior to v2.8.0.
+USEARCH by Robert Edgar is a program that harbors a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. Many popular pipelines such as QIIME (up to v.1.9.; Caporaso et l. 2010), IMNGS (Lagkouvardos et al. 2016) among others rely on different versions of USEARCH and other programs. USEARCH however, is free of charge only in the 32 bit version, which holds a 4GB memory cap. While this is not a problem for most datasets (depending on the sample type between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be processed. USEARCH can be downloaded as a single executable file (www.drive5.com/usearch/download.html), see the tutorial for detailed instructions. To analyze larger datasets, FASPA includes VSEARCH by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to USEARCH (both USEARCH and VSEARCH are written in C++). For the FASPA workflow, it is evident that you don't use any VSEARCH version prior to v2.8.0.
 
 # Which publications have to be cited when using FASPA?
 
@@ -280,6 +280,8 @@ This will create an output file *OTU_table_w_taxonomy.txt* which can be directly
 
 
 # 6. Citations
+- Callahan BJ, McMurdie PJ, Rosen MJ, Han AW, Johnson AJA, Holmes SP. (2016) DADA2: High resolution sample inference from Illumina amplicon data. Nature methods. 13(7):581-583. doi:10.1038/nmeth.3869.
+- Callahan BJ, McMurdie PJ, Holmes SP. (2017) Exact sequence variants should replace operational taxonomic units in marker-gene data analysis. The ISME Journal. 11(12):2639-2643. doi:10.1038/ismej.2017.119.
 - Caporaso JG, Kuczynski J, Stombaugh J, Bittinger K, Bushman FD, et al. (2010) QIIME allows analysis of high-throughput community sequencing data,  Nature Methods, doi:10.1038/nmeth.f.303  
 - Edgar RC. (2010) Search and clustering orders of magnitude faster than BLAST, Bioinformatics 26(19), 2460-2461.
 doi: 10.1093/bioinformatics/btq461.
@@ -288,11 +290,14 @@ doi: 10.1093/bioinformatics/btq461.
 - Edgar RC. (2016), SINTAX, a simple non-Bayesian taxonomy classifier for 16S and ITS sequences, doi:10.1101/074161.
 - Rognes T, Flouri T, Nichols B, Quince C, Mahé F. (2016) VSEARCH: a versatile open source tool for metagenomics. PeerJ 4:e2584. doi: 10.7717/peerj.2584, https://github.com/torognes/vsearch
 - Edgar RC. (2016), UNOISE2: Improved error-correction for Illumina 16S and ITS amplicon reads.doi:10.1101/081257
+- Lagkouvardos I, Joseph D, Kapfhammer M, et al. (2016). IMNGS: A comprehensive open resource of processed 16S rRNA microbial profiles for ecology and diversity studies. Scientific Reports. 6:33721. doi:10.1038/srep33721.
 - Lagkouvardos I, Fischer S, Kumar N, Clavel T. (2017) Rhea: a transparent and modular R pipeline for microbial profiling based on 16S rRNA gene amplicons. PeerJ 5:e2836 doi:10.7717/peerj.2836
 - Langille, MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, a Reyes J, Clemente JC et al. (2013). Predictive functional profiling of microbial communities using 16S rRNA marker gene sequences, Nature Biotechnology, 1-10. doi:10.1038/nbt.2676.
 - Murdie and Holmes (2013) phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLoS ONE. 8(4):e61217, https://joey711.github.io/phyloseq/
+- Nossa CW, Oberdorf WE, Yang L, et al. (2010) Design of 16S rRNA gene primers for 454 pyrosequencing of the human foregut microbiome. World Journal of Gastroenterology,16(33):4135-4144. doi:10.3748/wjg.v16.i33.4135.
 - Quensen J. (2018). RDPutils: R Utilities for Processing RDPTool Output. R package version 1.4.1. https://rdrr.io/github/jfq3/RDPutils/
 - R-core team R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. ISBN 3-900051-07-0, URL http://www.R-project.org.
+- Rosselló-Móra R, Amann R. (2015) Past and future species definitions for Bacteria and Archaea. Systematic and Applied Microbiology. 38(4):209-216. doi:10.1016/j.syapm.2015.02.001
 - RStudio Team (2015). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL http://www.rstudio.com/
 - Wickham and Henry (2018)tidyr: Easily Tidy Data with 'spread()' and 'gather()' Functions. R package version 0.8.0.
   https://CRAN.R-project.org/package=tidyr
