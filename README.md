@@ -65,8 +65,8 @@ If you choose to perform downstream analysis in **R** and **RStudio**, cite:
 
 # FASPA Tutorial
 # 1. Before we start
-This tutorial intends to show an user with verly low bioinformatic experience how to process and analyze 16S amplicon sequencing data on her/his personal computer. As FASPA is based not on Micosoft Windows, but on the Linux operating system, I recommend the installation of a virtual box on your computer, where you can then run a Linux distribution such as Ubuntu. 
-Follow this link to set up your system: https://www.wikihow.com/Install-Ubuntu-on-VirtualBox
+This tutorial intends to show any user with very low bioinformatic experience how to process and analyze 16S amplicon sequencing data on her/his personal computer. As FASPA is based not on Micosoft Windows, but on the Linux operating system, I recommend the installation of a virtual box on your computer, where you can then run a Linux distribution such as Ubuntu. 
+Follow this link to set up your system: https://www.wikihow.com/Install-Ubuntu-on-VirtualBox.
 
 **Download and extract the FASPA script collection**
 First, go into the folder where you want to perform your analysis. This should be the same folder where your fastq-files are. Then, download the FASP_1.0.tar.gz file to Ubuntu by writing:
@@ -88,10 +88,10 @@ You will need a file in fasta format that contains the names and sequences of yo
 3. USEARCH will be sent to you by mail as an executable file.  
 4. Copy the USEARCH file into the order where you want to perform your analysis.  
 5. Rename the USEARCH file to "US_10_240" by typing "mv usearch10.0.240_i86osx32 US_10_240" or just rename the file in the GUI.  
-6. Run the command ""chmod +x US_10_240" and type in your password to make the file executable
+6. Run the command ""chmod +x US_10_240" and type in your password to make the file executable.
 
 **VSEARCH installation**
-Open a terminal and copy paste the text in the box. Keep in mind that you need admin rights to install VSEARCH.  VSEARCH is updated quite frequently. Thus I recommend to follow the installation instructions at the VSEARCH homepage (https://github.com/torognes/vsearch).
+Open a terminal and copy & paste the text in the box. Keep in mind that you need admin rights to install VSEARCH. VSEARCH is updated quite frequently. Thus I recommend to follow the installation instructions at the VSEARCH homepage (https://github.com/torognes/vsearch).
 
 **16S database for taxonomic assignment**
 FASPA by default uses the RDP_16S_v16 which is also a recommendation for the SINTAX classifier used in FASPA. To download the training set, you can go to the USEARCH homepage: https://www.drive5.com/usearch/manual/sintax_downloads.html.  
@@ -138,7 +138,7 @@ In the example below we use again the primer pair by Nossa et al. (2010), which 
 ```
 bash FASP_preprocess_v2.sh -l 19 -r 19 -m 450 -s 390
 ```
-Now the script starts running. We see that forward and reserve reads are merged, and we see the percentage of reads that were merging. All files will be stored together in one file, named *raw.fq*. Next, FASPA extracts randomly a subset of your reads (by default 100). This is done to check at which position of your sequences the actual primer sequences are found  (or not found). At this point the script stops and asks you if you checked the position and size of your primers and the expected length of your amplicons:
+Now the script starts running. We see that forward and reserve reads are merged, and the percentage of reads that were merging is also displayed. All files will be stored together in one file, named *raw.fq*. Next, FASPA extracts randomly a subset of your reads (by default 100). This is done to check at which position of your sequences the actual primer sequences are found  (or not found). At this point the script stops and asks you if you checked the position and size of your primers and the expected length of your amplicons:
 <p align="center">
     <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/check.png" width="620" height="100" />
 </p>
