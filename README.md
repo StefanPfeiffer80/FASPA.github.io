@@ -57,9 +57,9 @@ If you choose to perform downstream analysis in **R** and **RStudio**, cite:
 The **Rhea** script collection:
 - Lagkouvardos I, Fischer S, Kumar N, Clavel T. (2017) Rhea: a transparent and modular R pipeline for microbial profiling based on 16S rRNA gene amplicons. PeerJ 5:e2836 https://doi.org/10.7717/peerj.2836
 **Phyloseq**: 
-McMurdie and Holmes (2013) phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLoS ONE. 8(4):e61217
+McMurdie and Holmes. (2013) phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLoS ONE. 8(4):e61217  
 **RDPutils**
-John Quensen (2018). RDPutils: R Utilities for Processing RDPTool Output.
+- Quensen J.(2018).RDPutils: R Utilities for Processing RDPTool Output. 
 
 # FASPA Tutorial
 # 1. Before we start
@@ -296,14 +296,3 @@ doi: 10.1093/bioinformatics/btq461.
 - RStudio Team (2015). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL http://www.rstudio.com/
 - Wickham and Henry (2018)tidyr: Easily Tidy Data with 'spread()' and 'gather()' Functions. R package version 0.8.0.
   https://CRAN.R-project.org/package=tidyr
-
-
-
- 
-
-
-3.	FASP_uparse.sh
-Using the uniques.fa file as an input, the uparse algorithm will create operational taxonomic units (OTUs) at a 97% sequence similarity treshold. 97% 16S rRNA sequence similarity was for a long time treated as a marker for the establishment of species. However, it should be considered that this will not be the case for many bacterial species, including most enterobacteriaceae., . Using OTUs defined by clustering from unique sequences, FASPA creates a OTU table, likewise corrected by applying the UNCROSS algorithm, as it was done in FASP_unoise.sh.
-
-Output files of FASP_uparse.sh: -> zotus.fa
-or OTU clustering (using UPARSE), both part of Usearch v.10.240
