@@ -220,7 +220,7 @@ A common problem in bioinformatics is how to combine different bioinformatic ana
 *FASPA* allows the transformation of the output files from **FASP_uparse.sh** and **FASP_unoise.sh** into a single *phyloseq-object*. From there on, the script **Physeq_to_Rhea.R** further transforms the *phyloseq-object* into a *OTU table with taxonomy* which is already formatted according to the needs of the Rhea pipeline.  
 In the following lines, I will provide an exact guideline on how out of your output files from **FASP_uparse.sh** amd **FASP_unoise.sh** a *phyloseq-object* and a *Rhea-input-file* will be created.  
 
-# R-Tutorial 
+# 5. R-Tutorial 
 **Software needed**
 Go to the R-studio page: https://www.rstudio.com/products/rstudio/download/. Choose your operating system (Windows or Linux), download the newest version, then follow the installation instructions.
 Then start R-studio and install phyloseq (see the detailed instructions here: https://joey711.github.io/phyloseq/install.html). 
