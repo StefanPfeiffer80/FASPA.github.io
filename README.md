@@ -220,7 +220,7 @@ In the following lines, I will provide an exact guideline on how out of your out
 Go to the R-studio page: https://www.rstudio.com/products/rstudio/download/. Choose your operating system, download the newest version, then follow the installation instructions.
 Then start R-studio and install phyloseq (see the detailed instructions here: https://joey711.github.io/phyloseq/install.html). 
 Rhea can be downloaded from this link (https://lagkouvardos.github.io/Rhea/). With the downloaded files you will also find a .pdf file with detailed instructions on how to apply each of the Rhea scripts. We also need the package RDPutils (Quensen 2018), whcih can be installed following the instruction on this site (https://rdrr.io/github/jfq3/RDPutils/). Additionally, we need to install the package tidyr (Wickham and Henry 2018; select from your closest cran repository). Finally, download the FASPA *Physeq_to_Rhea.R* script file from this repository.
-Choose the file location (In Windows or Linux) where you want to perform your analysis. e.g. C:\RheaTest\.
+Create the file location (In Windows or Linux) where you want to perform your analysis. e.g. C:\RheaTest\.
 In this folder you have to prepare six empty folders, named exactly as shown in the picture below.
 
 <p align="center">
@@ -228,18 +228,53 @@ In this folder you have to prepare six empty folders, named exactly as shown in 
 </p>
 
 **FASPA output files needed**
-For simplicity, the tutorial deals with the output files of **FASP_unoise.sh**. 
+For simplicity, the tutorial deals with the output files of *FASP_unoise.sh*. 
 - *Tree_UN.tree*
 - *SINTAX_OTUS_RDP_UN_FILT.txt*
 - *otutab_UN_uncrossed.txt*
 - *mapping_file.tab*  The mapping file contains all metainformation of your samples, including categorical and numerical variables. You can find an example mapping file here.
 
-**Preparation of FASPA output files for phyloseq and Rhea**
-First, you have to set your working directory. Then 
+Copy all output files in the 1.Normalization folder. Also, copy the files *Tree_UN.tree* and *mapping_file.tab* in the "Beta-Diversity" folder. Also deposit one copy of *mapping_file.tab* into the "5.Group-Comparisons" folder
 
+**Preparation of FASPA output files for phyloseq and Rhea**
+First we will transform the input files into a *phyloseq-object*, which we name *physeq* (see the code block below). As the phyloseq package is loaded you can perform various analyses already.
+You have to adjust the names in the code block below if you used different names for your FASP output files (e.g. after filtering contaminants).
+Run the code below:
+
+```
+setwd("C:/RheaTest/Rhea/1.Normalization")
+TAX<-RDPutils::import_sintax_file("SINTAX_OTUS_RDP_UN_FILT.txt")
+otumat<-read.csv("otutab_UN_uncrossed.txt",sep="\t", header = TRUE, row.names=1)
+OTU = otu_table(otumat, taxa_are_rows = TRUE)
+physeq = phyloseq(OTU, TAX)
+sampledata = import_qiime_sample_data("mapping_file.tab")
+physeq = phyloseq(OTU,TAX,sampledata)
+OTU_TAX_Rhea <- cbind.data.frame(otu_table(physeq),tax_table(physeq))
+```
+
+Then, we open the script *Physeq_to_Rhea.R* in RStudio.
+In the shell, we look at the structure of the OTU+taxonomy table that was extracted out of the phyloseq object by typing "str(OTU_TAX_Rhea)" (see the code block below). The output will give you the number of observations (rows = OTUs) and variables (columns = samples + taxonomic ranks). 
+
+Now, look at the *Physeq_to_Rhea* script in the editor: Here you have to adjust the positions of your taxonomic columns, which will be the last 6 variables/columns (e.g. if *str(OTU_TAX_Rhea)* showed 33 variables, this will be the variables "28:33". Accordingly, you have to adapt the number of samples (see the line that starts with R4!) In our case the positions will be 1:27.
+
+```
+Physeq_to_Rhea<-function(OTUTAX){
+  R1<-OTUTAX[,28:33#<-Select columns which contain the (normally 6) taxonomic levels = Starts with Number of samples+2 
+             ]%>%unite(taxonomy,c("Kingdom","Phylum","Class","Order","Family","Genus"), sep=";",remove=TRUE) #<-Adjust 
+##code not shown##
+        R4 <- gsub(";","/t", R3[,1:27])#<-Number of samples counting from 1 + 1
+##code not shown##
+```
+
+After you adjusted *Physeq_to_Rhea* script, copy & paste the content in the shell and press the Enter key!
+Then type:
+```
+Physe_to_Rhea(OTU_TAX_Rhea)
+```
+This will create an output file *OTU_table_w_taxonomy.txt* which can be directly applied in the Rhea pipeline, starting with the *Normalization* script (see the instructions in the Rhea script files).
 
 # 6. Changing parameters
-FASPA script files can be adjusted to your personal needs and preferences.
+FASPA script files can be adjusted to your personal needs and preferences. 
 <p>
     <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/preprocess_selection.png" width="1000" height="80" />
 </p>
