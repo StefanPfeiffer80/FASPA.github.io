@@ -65,7 +65,7 @@ If you choose to perform downstream analysis in **R** and **RStudio**, cite:
 
 # FASPA Tutorial
 # 1. Before we start
-This tutorial intends to show any user with very low bioinformatic experience how to process and analyze 16S amplicon sequencing data on her/his personal computer. As FASPA is based not on Micosoft Windows, but on the Linux operating system, I recommend the installation of a virtual box on your computer, where you can then run a Linux distribution such as Ubuntu. 
+This tutorial intends to show any user with very few bioinformatic experience how to process and analyze 16S amplicon sequencing data on her/his personal computer. As FASPA is based not on Micosoft Windows, but on the Linux operating system, I recommend the installation of a virtual box on your computer, where you can then run a Linux distribution such as Ubuntu. 
 Follow this link to set up your system: https://www.wikihow.com/Install-Ubuntu-on-VirtualBox.
 
 **Download and extract the FASPA script collection**
@@ -90,10 +90,10 @@ You will need a file in fasta format that contains the names and sequences of yo
 5. Rename the USEARCH file to "US_10_240" by typing "mv usearch10.0.240_i86osx32 US_10_240" or just rename the file in the GUI.  
 6. Run the command ""chmod +x US_10_240" and type in your password to make the file executable.
 
-**VSEARCH installation**
+**VSEARCH installation**  
 Open a terminal and copy & paste the text in the box. Keep in mind that you need admin rights to install VSEARCH. VSEARCH is updated quite frequently. Thus I recommend to follow the installation instructions at the VSEARCH homepage (https://github.com/torognes/vsearch).
 
-**16S database for taxonomic assignment**
+**16S database for taxonomic assignment**  
 FASPA by default uses the RDP_16S_v16 which is also a recommendation for the SINTAX classifier used in FASPA. To download the training set, you can go to the USEARCH homepage: https://www.drive5.com/usearch/manual/sintax_downloads.html.  
 ```
 wget https://www.drive5.com/sintax/rdp_16s_v16.fa.gz
@@ -203,7 +203,7 @@ Last, two scripts are called that create OTU tables with added taxonomic informa
 - *otutab_otus_greengenes.txt*   The otu table *otutab_UN_uncrossed.txt* with taxonomic information added using the greengenes syntax.
 - *otutab_otus_SILVA.txt*       The otu table *otutab_UN_uncrossed.txt* with taxonomic information added using the SILVA syntax.
 
-# 3. Removal of contaminant OTUs
+# 3. Removal of contaminant ZOTUs/OTUs
 The addition of negative controls for PCR (and also of negative extraction controls to determine contaminants from extraction kits or sample processing) is crucially important in amplicon library preparation. When it comes to the analyis of the sequencing data, we want to filter out OTUs that derive from the negative controls and contaminate our real biological samples. Although the removal of these contaminant OTUs could be easily automated and included in the FASP scripts, I recommend to investigate your OTU table via a spreedsheet program such as Microsoft Excel or LibreOffice Calc. The reason for this is that by automated filtration you might lose OTUs that may appear 10000 times in particular samples but just once or twice in your control. Knowing that especially highly abundant sample OTUs can appear as false positives in the controls via e.g. crosstalk, it is definitely a good choice to investigate your dataset manually. In FASPA, although these typically wrongly assigned crosstalk-OTUs are filtered out mostly beforehand thanks to the UNCROSS algorithm (check this out by comparing *otutab_UN_raw.txt* with *otutab_UN_uncrossed.txt*), only a manual check-up will give you certainity. When you identified your contaminant OTUs, simply delete them from all samples and then also the now empty control samples. Save the table with a new name, e.g. *otutab_UN_uncrossed_filt.txt*.  
 Then run the script *FASP_tax_filtered.pl*
 
@@ -232,7 +232,7 @@ In this folder you have to prepare six empty folders, named exactly as shown in 
     <img src="https://github.com/StefanPfeiffer80/FASPA.github.io/blob/master/pictures/Rhea_R_folder.png" width="620" height="200" />
 </p>
 
-**FASPA output files needed**
+**FASPA output files needed**  
 For simplicity, the tutorial deals with the output files of *FASP_unoise.sh*. 
 - *Tree_UN.tree*
 - *SINTAX_OTUS_RDP_UN_FILT.txt*
@@ -274,7 +274,7 @@ Physeq_to_Rhea<-function(OTUTAX){
 After you adjusted *Physeq_to_Rhea* script, copy & paste the content in the shell and press the Enter key!
 Then type:
 ```
-Physe_to_Rhea(OTU_TAX_Rhea)
+Physeq_to_Rhea(OTU_TAX_Rhea)
 ```
 This will create an output file *OTU_table_w_taxonomy.txt* which can be directly applied in the Rhea pipeline, starting with the *Normalization* script (Follow the instructions in the Rhea script files).
 
