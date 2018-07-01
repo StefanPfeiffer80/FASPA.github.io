@@ -69,10 +69,9 @@ This tutorial intends to show any user with very few bioinformatics experience h
 Follow this link to set up your system: https://www.wikihow.com/Install-Ubuntu-on-VirtualBox.
 
 **Download and extract the FASPA script collection**  
-First, go into the folder where you want to perform your analysis. This should be the same folder where your fastq-files are. Open the terminal, and download the FASP_1.0.tar.gz file to Ubuntu by writing:
+Download FASPA with the clone or download option from this page. Extract the folder at your favorite destination. Go to the /Scripts folder of the extracted FASPA clone and copy and paste all the files from the /Scripts folder into the folder where you want to perform your analysis. If you want to do this from the command line, in your script folder, simply type:
 ```
-wget https://github.com/StefanPfeiffer80/FASPA.github.io/FASP_1.0.tar.gz
-tar xzf FASP_1.0.tar.gz
+cp *.* /<target folder with your fastq files>
 ```
 
 **Change the primers.fa file according to your needs**  
