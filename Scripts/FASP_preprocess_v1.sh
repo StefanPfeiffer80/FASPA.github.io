@@ -4,7 +4,7 @@
 # FASPA is a workflow for analysing Illumina paired-end sequence data. 
 # This file is distributed without warranty
 # This file runs as a Linux bashscript; 
-# Cite as: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses, DOI:10.5281/zenodo.1302800
+# Cite as: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses, DOI:10.5281/zenodo.1302799
 
 set -e
 set -o pipefail
