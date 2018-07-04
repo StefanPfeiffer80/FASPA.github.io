@@ -6,7 +6,7 @@
 # This file is distributed without warranty
 # This file runs as a Linux bashscript; You can run this script only after finishing FASP_preprocessing.sh;
 # This script generates an OTU table, a phylogenetic tree, a taxonomy file
-# Cite as: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses, DOI:10.5281/zenodo.1302800
+# Cite as: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses, DOI:10.5281/zenodo.1302799
 
 # 1.Cluster OTUs with UPARSE, at 97% sequence similarity 
 ./US_10.240 -cluster_otus uniques.fa -otus otus.fa -relabel Otu
