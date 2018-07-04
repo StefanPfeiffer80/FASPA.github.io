@@ -287,6 +287,7 @@ This will create an output file *OTU_table_w_taxonomy.txt* which can be directly
 - Edgar RC. (2010) Search and clustering orders of magnitude faster than BLAST, Bioinformatics 26(19), 2460-2461.
 doi: 10.1093/bioinformatics/btq461.
 - Edgar RC. (2013) UPARSE: Highly accurate OTU sequences from microbial amplicon reads, Nature Methods, doi:10.1038/nmeth.2604.
+- Edgar RC and Flyvbjerg H. (2015) Error filtering, pair assembly and error correction for next-generation sequencing reads Bioinformatics. 31(12): 3476–3482. https://doi.org/10.1093/bioinformatics/btv401  
 - Edgar RC. (2016) UNCROSS: Filtering of high-frequency cross-talk in 16S amplicon reads. doi: doi:10.1101/088666.
 - Edgar RC. (2016, SINTAX, a simple non-Bayesian taxonomy classifier for 16S and ITS sequences, doi:10.1101/074161.
 - Rognes T, Flouri T, Nichols B, Quince C, Mahé F. (2016) VSEARCH: a versatile open source tool for metagenomics. PeerJ 4:e2584. doi: 10.7717/peerj.2584, https://github.com/torognes/vsearch
