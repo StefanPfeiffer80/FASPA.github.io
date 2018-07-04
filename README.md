@@ -99,7 +99,7 @@ FASPA by default uses the RDP_16S_v16 which is also a recommendation for the SIN
 wget https://www.drive5.com/sintax/rdp_16s_v16.fa.gz
 gunzip rdp_16s_v16.fa.gz
 ```
-
+ 
 # 2. FASPA workflow tutorial
 **Amplicon Processing using the bash scripts *FASP_preprocess_v1.sh, FASP_preprocess_v2.sh, FASP_unoise.sh, FASP_uparse.sh***  
 
@@ -122,9 +122,9 @@ Preprocessing includes:
 - preparing a set of unique sequences
 
 For small and medium sized 16S amplicon libraries of up to 100 samples (can be more or less, depends on the average read number of the samples and on the length of the amplicons), the script *FASP_preprocess_v1.sh* can be called. The advantage is that VSEARCH does not need to be installed, as *FASP_preprocess_v1.sh* uses the 32 bit version of USEARCH which has a 4GB memory cap. Thus, *FASP_preprocess_v1.sh* should be only used if you have a relatively small dataset.  
-For running *FASP_preprocess_v1.sh*, you have to set to tell FASPA the length of the primers you are using. In the example below we use the primer pair by Nossa et al. (2010), wheras the forward primer (-l) and the reverse primer (-r) each consists of 19 nucleotides. 
+For running *FASP_preprocess_v1.sh*, you have to set to tell FASPA the length of the primers you are using. In the example below we use the primer pair by Nossa et al. (2010), wheras the forward primer (-l) and the reverse primer (-r) each consists of 19 nucleotides. Via the option (-q) you can set the treshold for quality filtering based on the maximum number of expected errors which is derived from the quality values (Phred scores) of your reads (see Edgar & Flyvbjerg 2014 or https://www.drive5.com/usearch/manual/exp_errs.html). 
 ```
-bash FASP_preprocess_v1.sh -l 19 -r 19
+bash FASP_preprocess_v1.sh -l 19 -r 19 -q 1.0
 ```
 
 If we assume that you have a huge number of data, we use *FASP_preprocess_v2.sh*, which beside USEARCH, applies also the open source software VSEARCH for the sequence processing. In order to run bash *FASP_preprocess_v2.sh*, we have to set several parameters.  
@@ -133,10 +133,11 @@ These include:
 - *-r* the length of the reverse primer
 - *-m* the maximum expected sequence length
 - *-s* the minimum expected sequence length
+- *-q* the expected error rate
 
 In the example below we use the primer pair by Nossa et al. (2010) again, which confines an expected amplicon length of ~450 bp. Both primers have a length of 19 nucleotides, and thus the expected length of the sequence with primer removed is around 410 bp.
 ```
-bash FASP_preprocess_v2.sh -l 19 -r 19 -m 450 -s 390
+bash FASP_preprocess_v2.sh -l 19 -r 19 -m 450 -s 390 -q 1.0
 ```
 Now the script starts running. We see that forward and reserve reads are merged, and the percentage of reads that were merging is also displayed. All files will be stored together in one file, named *raw.fq*. Next, FASPA extracts randomly a subset of your reads (by default 100). This is done to check at which position of your sequences the actual primer sequences are found  (or not found). At this point the script stops and asks you if you checked the position and size of your primers and the expected length of your amplicons:
 <p align="center">
