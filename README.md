@@ -12,7 +12,7 @@
 - FASPA output files can be directly used for downstream analyses using e.g. the phyloseq package in R, the Rhea script collection, or the QIIME software package.   
 - For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. DOI: 10.5281/zenodo.1302799
 - FASPA is distributed without warranty.  
-- Contact: Stefan Pfeiffer; microbiawesome@gmail.com.  
+- Contact: Dr. Stefan Pfeiffer; microbiawesome@gmail.com.  
 
 **<p align="center">
     FASPA - Fast Amplicon Sequence Processing and Analysis for MiSeq paired end sequence data
