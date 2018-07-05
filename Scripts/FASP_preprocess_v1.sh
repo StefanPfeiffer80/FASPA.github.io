@@ -38,7 +38,7 @@ select yn in "Yes" "No"; do
     esac
 done
 # 6. Removal of primers + adapters
-while getopts ":l:r:" opt
+while getopts ":l:r:q:" opt
    do
      case $opt in
         l ) primerleft=$OPTARG;;
