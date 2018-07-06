@@ -37,7 +37,7 @@ while getopts ":l:r:m:s:q:" opt
      esac
 done
 ### You have to enter minimum length of your sequences and the maximum lenght of your sequences. Due to differences in 16S amplicon length you should use a frame of 50-100 base pair positions (e.g. 300-360 for an amplicon of the expected size of 330 bp). 
-vsearch -fastq_filter raw.fq --fastq_stripleft $primerleft --fastq_stripright $primerright --fastq_maxee $ee --fastq_maxlen $max --fastq_minlen $min --fastaout fileredstripped.fa
+vsearch -fastq_filter raw.fq --fastq_stripleft $primerleft --fastq_stripright $primerright  --fastq_maxlen $max --fastq_minlen $min --fastq_maxee $ee --fastaout filteredstripped.fa
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 echo "Successful, low quality reads were removed; Output file: filteredstripped.fa"
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
