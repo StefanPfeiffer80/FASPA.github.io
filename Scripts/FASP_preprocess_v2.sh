@@ -42,5 +42,5 @@ echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 echo "Successful, low quality reads were removed; Output file: filteredstripped.fa"
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 # 4.Extracting uniques sequences: 
-./US_10.240 -fastx_uniques filteredstripped.fa -sizeout -relabel Uniq -fastaout uniques.fa # output file is "uniques.fa"
+vsearch --derep_fulllength filteredstripped.fa -sizeout -relabel Uniq -output uniques.fa # output file is "uniques.fa"
 echo "Successful; The file uniques.fa contains your unique read seuqences; Next comes denoising (bash FASP_unoise.sh)or OTU clusetring (bash FASP_uparse.sh)"
