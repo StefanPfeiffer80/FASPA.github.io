@@ -33,7 +33,10 @@ echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 echo "Sequence length trimming successfull; Output file: otus_sorted_UN.fasta"
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 #4. Make (Z)OTU table
-./US_10.240 -otutab raw.fq -otus otus_sorted_UN.fasta -otutabout otutab_UN_raw.txt
+vsearch -otutab raw.fq -usearch_global filteredstripped.fa --db otus_sorted_UN.fasta --id 0.99 --otutabout otutab_UN_raw.txt
+if [ $? -ne 0 ]; then
+  ./US_10.240 -otutab raw.fq -otus otus_sorted_UN.fasta -otutabout otutab_UN_raw.txt
+fi
 #5. Uncross(Z)OTU table to remove spurious (Z)OTUs generated via cross-talk 
 ./US_10.240 -uncross otutab_UN_raw.txt -tabbedout outUN.txt -report repUN.txt -otutabout otutab_UN_uncrossed.txt
 #6. Statistics of your (Z)OTU table
