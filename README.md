@@ -27,14 +27,14 @@ FASPA also supports the integration of the processed amplicon data in various po
 In a nutshell, FASPA manages a precarious balance by being very fast, state of the art, having low CPU requirements, being transparent and at the same time easy to use.   
 
 **Software needed**  
-The FASPA script collection can be downloaded here. As FASPA relies on third party software workflow, it is necessary that you also install USEARCH v.10.240 (Edgar 2010) and optionally VSEARCH v.2.80 (or higher). 
+The FASPA script collection can be downloaded here. As the FASPA workflow relies on third party software, it is necessary that you also install USEARCH v.10.240 (Edgar 2010) and optionally VSEARCH v.2.80 (or higher). 
 USEARCH by Robert Edgar is a program that harbors a collection of functions and algorithms to efficiently, fast and accurately transform raw amplicon reads into an OTU table for downstream analysis. Many popular pipelines such as QIIME (up to v.1.9.; Caporaso et al. 2010) or IMNGS (Lagkouvardos et al. 2016) rely on different versions of USEARCH and other programs. USEARCH however, is free of charge only in the 32 bit version, which holds a 4GB memory limit. While this is not a problem for many datasets (depending on the sample type, normally between 50 and 100 samples can be processed with the 32bit version), larger datasets will not be processed. USEARCH can be downloaded as a single executable file (www.drive5.com/usearch/download.html), see the tutorial for detailed instructions. To analyze larger datasets, FASPA includes VSEARCH by Torbjørn Rognes (Rognes et al. 2016), which was designed as an open source alternative to USEARCH (both USEARCH and VSEARCH are written in C++). For the FASPA workflow, it is evident that you don't use any VSEARCH version prior to v2.8.0.
 
 # Which publications have to be cited when using FASPA?
 
-For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. (DOI:kommt noch)  
+For using FASPA scripts, please cite: Pfeiffer, S. (2018) FASPA - Fast Amplicon Sequence Processing and Analyses. (DOI:10.5281/zenodo.1302799)  
 
-FASPA gives transparencyt on which third party software it relies on.  I think it is important for the user to know which and how programs in the pipeline are applied, and it is fair for the developer of the third party software to be credited accordingly. 
+FASPA gives transparencyt on which third party software it relies on. I think it is important for the user to know which and how programs in the pipeline are applied, and it is fair for the developer of the third party software to be credited accordingly. 
 
 Thus, in all cases when you use FASPA, cite also the USEARCH software, and also its implemented algorithms UNCROSS and SINTAX.
 - Edgar,RC (2010) Search and clustering orders of magnitude faster than BLAST, Bioinformatics 26(19), 2460-2461.
@@ -103,7 +103,7 @@ gunzip rdp_16s_v16.fa.gz
 # 2. FASPA workflow tutorial
 **Amplicon Processing using the bash scripts *FASP_preprocess_v1.sh, FASP_preprocess_v2.sh, FASP_unoise.sh, FASP_uparse.sh***  
 
-When all needed programs are installed and they are also at their place, amplicon processing with FASPA can finally start.
+When all needed programs are installed and they are also at their place, amplicon processing with FASPA can start.
 1. Go to the folder where you want to perform your analysis.
 2. List your files by typing "ls" or "ll". Your folder should then look somehow like this (there will be different and of course I assume a higher number of .fastq files).
 <p align="center">
