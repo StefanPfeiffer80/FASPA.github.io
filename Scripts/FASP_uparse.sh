@@ -1,4 +1,4 @@
-# FASP_uparse file; written by Stefan Pfeiffer, 1.December 2017, last modified on 30.6.2018; 
+# FASP_uparse file; written by Stefan Pfeiffer, 1.December 2017, last modified on 18.7.2018; 
 # Contact: microbiawesome@gmail.com; 
 # Copyright (C) Stefan Pfeiffer, 2016-2018, all rights reserved.
 # FASP is a workflow for analysing Illumina paired-end sequence data. 
@@ -32,8 +32,11 @@ done
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 echo "Sequence length trimming successfull; Output file: otus_sorted_UP.fasta"
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-#3. Make TU table
-./US_10.240 -otutab raw.fq -otus otus_sorted_UP.fasta -otutabout otutab_UP_raw.txt
+#3. Make OTU table
+vsearch -otutab raw.fq -usearch_global filteredstripped.fa --db otus_sorted_UP.fasta --id 0.99 --otutabout otutab_UP_raw.txt
+if [ $? -ne 0 ]; then
+  ./US_10.240 -otutab raw.fq -otus otus_sorted_UP.fasta -otutabout otutab_UP_raw.txt
+fi
 #4. UncrossOTU table to remove spurious OTUs generated via cross-talk 
 ./US_10.240 -uncross otutab_UP_raw.txt -tabbedout outUP.txt -report repUP.txt -otutabout otutab_UP_uncrossed.txt
 #6. Statistics of your OTU table
@@ -42,7 +45,7 @@ echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 # Default value for the sintax_cutoff is 0.5, can be adjusted
 ./US_10.240 -sintax otus_sorted_UP.fasta -db rdp_16s_v16.fa -strand both \-tabbedout sintaxotusrdp.txt -sintax_cutoff 0.5 
 #8. Delete OTUs from the SINTAX-OUTPUT FILE file that are not in the OTU table
-perl ./project/genomics/Stefan/FASPA/FASP_tax_filtered.pl otutab_UP_uncrossed.txt sintaxotusrdp.txt SINTAX_OTUS_RDP_FILT.txt
+perl ./FASP_tax_filtered.pl otutab_UP_uncrossed.txt sintaxotusrdp.txt SINTAX_OTUS_RDP_FILT.txt
 #9. Make a phylogenetic tree
 ./US_10.240 -cluster_agg otus_sorted_UP.fasta -treeout Tree_UP.tree
 #10.Construct a QIIME OTU table .txt and BIOM using Greengenes annotation -> if you want to use PICRUSt for example
